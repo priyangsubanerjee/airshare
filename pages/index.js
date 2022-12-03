@@ -29,9 +29,10 @@ export default function Home() {
 
   useLayoutEffect(() => {
     (async () => {
-      const room = router.query.room ? window.atob(router.query.room) : null;
-      room && console.log("Room was provided as", room);
-      socket == null && socketInitializer(room);
+      const providedRoom = router.query.room || null;
+      console.log("providedRoom", providedRoom);
+      socket == null &&
+        socketInitializer(providedRoom ? window.atob(providedRoom) : null);
     })();
   }, [router]);
 
@@ -52,7 +53,8 @@ export default function Home() {
       ? "https://airserver.up.railway.app"
       : "http://localhost:5589";
 
-  const socketInitializer = async (roomId) => {
+  const socketInitializer = async (providedRoom) => {
+    console.log("pp", providedRoom);
     socket = io(remote, {
       withCredentials: true,
       transports: [
@@ -68,8 +70,8 @@ export default function Home() {
       // Get users ip
       try {
         const { data } = await axios.get("https://ip4.seeip.org/json");
-        const room = roomId ? roomId : data.ip;
-        const c_socket = new SocketObject(socket.id, room);
+        let roomId = providedRoom == null ? data.ip : providedRoom;
+        const c_socket = new SocketObject(socket.id, roomId);
         socket.emit("join-room", c_socket);
         setUserSocket(c_socket);
       } catch (error) {}
@@ -97,11 +99,11 @@ export default function Home() {
               Share url:{" "}
               <a
                 target={"_blank"}
-                href={`http://airshare.vercel.app?room=${encrypt(
+                href={`https://airshare.vercel.app?room=${encrypt(
                   userSocket.room
                 )}`}
               >
-                https://airshare.vercel.app/?room={encrypt(userSocket.room)}
+                https://airshare.vercel.app?room={encrypt(userSocket.room)}
               </a>
             </div>
           </div>

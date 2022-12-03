@@ -12,6 +12,7 @@ module.exports = {
       "localhost",
       "airshare-six.vercel.app",
       "localhost:5589",
+      "ip.seeip.org",
       "192.168.163.50",
     ],
   },
