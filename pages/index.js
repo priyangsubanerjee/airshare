@@ -99,12 +99,11 @@ export default function Home() {
               Share url:{" "}
               <a
                 target={"_blank"}
-                href={`https://https://airserver.up.railway.app/?room=${encrypt(
+                href={`http://airshare.vercel.app?room=${encrypt(
                   userSocket.room
                 )}`}
               >
-                https://airserver.up.railway.app?room=
-                {encrypt(userSocket.room)}
+                https://airshare.vercel.app/?room={encrypt(userSocket.room)}
               </a>
             </div>
           </div>
