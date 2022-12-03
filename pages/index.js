@@ -30,9 +30,11 @@ export default function Home() {
   useLayoutEffect(() => {
     (async () => {
       const providedRoom = router.query.room || null;
-      console.log("providedRoom", providedRoom);
+      console.log("providedRoom", window.atob(providedRoom));
       socket == null &&
-        socketInitializer(providedRoom ? window.atob(providedRoom) : null);
+        socketInitializer(
+          providedRoom !== null ? window.atob(providedRoom) : null
+        );
     })();
   }, [router.query.room]);
 
