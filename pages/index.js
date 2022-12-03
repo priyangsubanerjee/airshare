@@ -52,7 +52,7 @@ export default function Home() {
       ? "https://airserver.up.railway.app"
       : "http://localhost:5589";
 
-  const socketInitializer = async (room) => {
+  const socketInitializer = async (roomId) => {
     socket = io(remote, {
       withCredentials: true,
       transports: [
@@ -68,10 +68,8 @@ export default function Home() {
       // Get users ip
       try {
         const { data } = await axios.get("https://ip4.seeip.org/json");
-        const c_socket = new SocketObject(
-          socket.id,
-          room == null ? data.ip : room
-        );
+        const room = roomId ? roomId : data.ip;
+        const c_socket = new SocketObject(socket.id, room);
         socket.emit("join-room", c_socket);
         setUserSocket(c_socket);
       } catch (error) {}
