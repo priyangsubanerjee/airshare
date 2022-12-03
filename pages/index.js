@@ -71,7 +71,7 @@ export default function Home() {
       try {
         const { data } = await axios.get("https://ip4.seeip.org/json");
         let roomId = providedRoom == null ? data.ip : providedRoom;
-        const c_socket = new SocketObject(socket.id, roomId);
+        const c_socket = new SocketObject(socket.id, "roomId");
         socket.emit("join-room", c_socket);
         setUserSocket(c_socket);
       } catch (error) {}
