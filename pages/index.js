@@ -10,7 +10,7 @@ export default function Home() {
   }, []);
 
   const socketInitializer = async () => {
-    socket = io("http://localhost:5589", {
+    socket = io("https://airserver.up.railway.app", {
       withCredentials: true,
       transports: [
         "websocket",
