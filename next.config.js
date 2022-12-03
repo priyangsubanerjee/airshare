@@ -11,7 +11,8 @@ module.exports = {
       "randomprops.vercel.app",
       "localhost",
       "airshare-six.vercel.app",
-      "192.168.1.36",
+      "localhost:5589",
+      "192.168.163.50",
     ],
   },
 };

@@ -1,16 +1,59 @@
-import { useEffect } from "react";
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useLayoutEffect, useState } from "react";
+import axios from "axios";
 import io from "socket.io-client";
+import { useRouter } from "next/router";
+
 let socket = null;
 
 export default function Home() {
-  useEffect(() => {
-    (async () => {
-      socket == null && socketInitializer();
-    })();
-  }, []);
+  class SocketObject {
+    constructor(id, room) {
+      this.id = id;
+      this.room = room;
+    }
 
-  const socketInitializer = async () => {
-    socket = io("https://airserver.up.railway.app", {
+    getId() {
+      return this.id;
+    }
+    getRoom() {
+      return this.room;
+    }
+  }
+
+  const router = useRouter();
+  const [userSocket, setUserSocket] = useState(null);
+  const [usersInRoom, setUsersInRoom] = useState([]);
+  const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
+
+  useLayoutEffect(() => {
+    (async () => {
+      const room = router.query.room ? window.atob(router.query.room) : null;
+      room && console.log("Room was provided as", room);
+      socket == null && socketInitializer(room);
+    })();
+  }, [router]);
+
+  const encrypt = (data) => {
+    let buffer = window.btoa(data);
+    return buffer;
+  };
+
+  useEffect(() => {
+    const unqiueUsers = usersInRoom.filter((user, index) => {
+      return user.id !== userSocket.id;
+    });
+    setUniqueUsersInRoom(unqiueUsers);
+  }, [usersInRoom]);
+
+  const remote =
+    process.env.NODE_ENV === "production"
+      ? "https://airserver.up.railway.app"
+      : "http://localhost:5589";
+
+  const socketInitializer = async (room) => {
+    socket = io(remote, {
       withCredentials: true,
       transports: [
         "websocket",
@@ -21,9 +64,22 @@ export default function Home() {
       ],
     });
 
-    socket.on("connect", () => {
-      console.log("connected");
-      console.log(socket.id);
+    socket.on("connect", async () => {
+      // Get users ip
+      try {
+        const { data } = await axios.get("https://ip4.seeip.org/json");
+        const c_socket = new SocketObject(
+          socket.id,
+          room == null ? data.ip : room
+        );
+        socket.emit("join-room", c_socket);
+        setUserSocket(c_socket);
+      } catch (error) {}
+    });
+
+    socket.on("users-in-room", (data) => {
+      console.log(data.message, data.users);
+      setUsersInRoom(data.users);
     });
 
     socket.on("disconnect", () => {
@@ -31,5 +87,38 @@ export default function Home() {
     });
   };
 
-  return <div></div>;
+  return (
+    <div>
+      {userSocket && (
+        <div>
+          <div className="p-5">
+            <div>You are connected to the server</div>
+            <div>Socket ID: {userSocket.getId()}</div>
+            <div>Socket Room: {userSocket.getRoom()}</div>
+            <div>
+              Share url:{" "}
+              <a
+                target={"_blank"}
+                href={`http://localhost:3000?room=${encrypt(userSocket.room)}`}
+              >
+                https://airshare.vercel.app/?room={encrypt(userSocket.room)}
+              </a>
+            </div>
+          </div>
+          <div className="p-5 bg-slate-50">
+            Other users in room {uniqueUsersInRoom.length}
+            <div>
+              {uniqueUsersInRoom.map((user, i) => {
+                return (
+                  <div key={i}>
+                    <p>{user.id}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
