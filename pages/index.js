@@ -36,6 +36,7 @@ export default function Home({ secondary_room }) {
           roomId = data.ip;
         } catch (error) {
           console.log(error);
+          alert("Error getting IP address");
         }
       }
 
