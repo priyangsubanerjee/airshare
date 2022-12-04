@@ -9,7 +9,7 @@ function scan() {
 
   return (
     <div>
-      <div className="mt-10">
+      <div className="">
         <QrReader />
       </div>
     </div>
