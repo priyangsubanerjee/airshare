@@ -93,7 +93,7 @@ export default function Home({ secondary_room }) {
   };
 
   return (
-    <div className="h-screen w-screen bg-white">
+    <div className="h-screen w-screen bg-white overflow-auto pb-40">
       <Navbar />
       {userSocket && (
         <div>
@@ -101,13 +101,13 @@ export default function Home({ secondary_room }) {
             <MyAvatar socket={userSocket} />
           </div>
           <div className="mt-8">
-            <div className="p-5 lg:p-20 flex items-center space-x-4">
+            <div className="p-5 lg:px-20 flex items-center space-x-4">
               <h2 className="text-sm font-medium shrink-0 text-neutral-700">
                 People near you
               </h2>
               <div className="w-full h-[1px] bg-neutral-200"></div>
             </div>
-            <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20 mt-2">
+            <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20 mt-2 lg:mt-6">
               {uniqueUsersInRoom.map((user, index) => {
                 return <OtherPeopleAvatar key={index} socket={user} />;
               })}

@@ -13,7 +13,7 @@ function MyAvatar({ socket }) {
           />
         </div>
       </div>
-      <p className="text-xs -mt-5 p-2 bg-white text-neutral-600">
+      <p className="text-xs font-medium -mt-5 p-2 bg-white text-neutral-600">
         {socket.getName()}
       </p>
       <p className="text-[10px] -mt-2 p-2 bg-white text-neutral-500">
