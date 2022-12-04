@@ -12,6 +12,7 @@ import MyAvatar from "../components/MyAvatar";
 import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
 import Loading from "../components/Loading";
 import Head from "next/head";
+import ShareRoom from "../components/ShareRoom";
 
 let socket = null;
 
@@ -30,6 +31,9 @@ export default function Home({ secondary_room }) {
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [shareRoomActive, setShareRoomActive] = useState(false);
+
+  const closeShareRoom = () => setShareRoomActive(false);
 
   useLayoutEffect(() => {
     let roomId = null; // Inititalize default room id
@@ -106,7 +110,10 @@ export default function Home({ secondary_room }) {
         <div>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
-            <button className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2">
+            <button
+              onClick={() => setShareRoomActive(true)}
+              className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -145,6 +152,11 @@ export default function Home({ secondary_room }) {
         </div>
       )}
       <Loading visible={loading} />
+      <ShareRoom
+        visible={shareRoomActive}
+        roomId={userSocket && userSocket.room}
+        close={() => closeShareRoom()}
+      />
     </div>
   );
 }
