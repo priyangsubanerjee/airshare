@@ -2,16 +2,13 @@
 
 const withPWA = require("next-pwa")({
   dest: "public",
+  skipWaiting: true,
+  register: true,
 });
 
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-};
-
-module.exports = withPWA(nextConfig);
-
-module.exports = {
   images: {
     domains: [
       "randomprops.vercel.app",
@@ -23,3 +20,5 @@ module.exports = {
     ],
   },
 };
+
+module.exports = withPWA(nextConfig);
