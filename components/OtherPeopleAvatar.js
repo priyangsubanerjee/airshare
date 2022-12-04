@@ -8,7 +8,7 @@ function OtherPeopleAvatar({ socket }) {
         <img src={socket.image} alt="" className="h-16 w-16 rounded-full" />
       </div>
 
-      <p className="text-xs mt-2 bg-white text-neutral-500 text-center">
+      <p className="text-[11px] mt-2 bg-white text-neutral-500 text-center">
         {socket.name}
       </p>
     </div>
