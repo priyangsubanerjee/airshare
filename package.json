@@ -16,6 +16,7 @@
     "node-fetch": "^3.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-qr-code": "^2.0.8",
     "socket.io-client": "^4.5.4",
     "string-encode": "^0.2.2",
     "text-encoding": "^0.7.0"

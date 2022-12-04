@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
+import QRCode from "react-qr-code";
 
 let socket = null;
 
@@ -105,6 +106,11 @@ export default function Home({ room }) {
                 https://airshare.vercel.app?room={userSocket.room}
               </a>
             </div>
+          </div>
+          <div>
+            <QRCode
+              value={`https://airshare.vercel.app?room=${userSocket.room}`}
+            />
           </div>
           <div className="p-5 bg-slate-50">
             Other users in room {uniqueUsersInRoom.length}
