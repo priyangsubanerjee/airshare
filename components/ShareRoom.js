@@ -64,11 +64,7 @@ function ShareRoom({ visible, roomId, close }) {
                 </div>
                 <p className="text-xs text-stone-500 mt-8">
                   or{" "}
-                  <Link
-                    href={
-                      "https://play.google.com/store/apps/details?id=com.priyangsubanerjee.scanner"
-                    }
-                  >
+                  <Link href={"/scan"}>
                     <>
                       <span>
                         <svg

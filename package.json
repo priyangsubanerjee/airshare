@@ -21,6 +21,7 @@
     "react-hot-toast": "^2.4.0",
     "react-qr-code": "^2.0.8",
     "react-qr-reader": "^3.0.0-beta-1",
+    "react-qrcode-reader": "^1.0.1",
     "react-reveal": "^1.2.2",
     "socket.io-client": "^4.5.4",
     "string-encode": "^0.2.2",
