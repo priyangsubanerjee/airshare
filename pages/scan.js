@@ -12,6 +12,15 @@ function Scan() {
           containerStyle={{ width: "100%" }}
           videoContainerStyle={{ width: "100%" }}
           videoStyle={{ width: "100%" }}
+          onScan={(data) => {
+            if (data) {
+              let url = new URL(data);
+              let room = url.searchParams.get("room");
+              if (room) {
+                window.location.href = `/?room=${room}`;
+              }
+            }
+          }}
           constraints={{
             facingMode: "environment",
           }}
