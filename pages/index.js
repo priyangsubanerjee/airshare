@@ -86,7 +86,7 @@ export default function Home({ secondary_room }) {
   };
 
   return (
-    <div className="h-screen w-screen bg-slate-100">
+    <div className="h-screen w-screen bg-slate-100 p-5">
       {userSocket && <div>{userSocket.id}</div>}
       <QRCode value={`${remoteOrigin}/?room=${userSocket?.room}`} size="100" />
     </div>
