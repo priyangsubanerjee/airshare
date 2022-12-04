@@ -100,6 +100,7 @@ export default function Home({ secondary_room }) {
               </div>
             );
           })}
+          <QRCode value={`${remoteOrigin}/?room=${userSocket.room}`} />
         </div>
       )}
     </div>
