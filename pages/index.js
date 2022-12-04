@@ -97,10 +97,13 @@ export default function Home({ secondary_room }) {
       <Navbar />
       {userSocket && (
         <div>
-          <div className="flex justify-center mt-6 lg:mt-0">
+          <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
+            <button className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-5">
+              Add people
+            </button>
           </div>
-          <div className="mt-8">
+          <div className="mt-2">
             <div className="p-5 lg:px-20 flex items-center space-x-4">
               <h2 className="text-sm font-medium shrink-0 text-neutral-700">
                 People near you
