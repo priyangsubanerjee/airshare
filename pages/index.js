@@ -7,7 +7,16 @@ import { useRouter } from "next/router";
 
 let socket = null;
 
-export default function Home() {
+export async function getServerSideProps(ctx) {
+  const room = ctx.query.room || null;
+  return {
+    props: {
+      room,
+    },
+  };
+}
+
+export default function Home({ room }) {
   class SocketObject {
     constructor(id, room) {
       this.id = id;
@@ -29,19 +38,11 @@ export default function Home() {
 
   useLayoutEffect(() => {
     (async () => {
-      const providedRoom = router.query.room || null;
-      console.log("providedRoom", window.atob(providedRoom));
-      socket == null &&
-        socketInitializer(
-          providedRoom !== null ? window.atob(providedRoom) : null
-        );
+      const { data } = await axios.get("https://ip4.seeip.org/json");
+      const roomId = room === null ? window.btoa(data.ip) : room;
+      socket == null && socketInitializer(roomId);
     })();
-  }, [router.query.room]);
-
-  const encrypt = (data) => {
-    let buffer = window.btoa(data);
-    return buffer;
-  };
+  }, []);
 
   useEffect(() => {
     const unqiueUsers = usersInRoom.filter((user, index) => {
@@ -55,8 +56,8 @@ export default function Home() {
       ? "https://airserver.up.railway.app"
       : "http://localhost:5589";
 
-  const socketInitializer = async (providedRoom) => {
-    console.log("pp", providedRoom);
+  const socketInitializer = async (room) => {
+    console.log("pp", room);
     socket = io(remote, {
       withCredentials: true,
       transports: [
@@ -71,9 +72,7 @@ export default function Home() {
     socket.on("connect", async () => {
       // Get users ip
       try {
-        const { data } = await axios.get("https://ip4.seeip.org/json");
-        let roomId = providedRoom == null ? data.ip : providedRoom;
-        const c_socket = new SocketObject(socket.id, roomId.toString());
+        const c_socket = new SocketObject(socket.id, room);
         socket.emit("join-room", c_socket);
         setUserSocket(c_socket);
       } catch (error) {}
@@ -101,11 +100,9 @@ export default function Home() {
               Share url:{" "}
               <a
                 target={"_blank"}
-                href={`https://airshare.vercel.app?room=${encrypt(
-                  userSocket.room
-                )}`}
+                href={`https://airshare.vercel.app?room=${userSocket.room}`}
               >
-                https://airshare.vercel.app?room={encrypt(userSocket.room)}
+                https://airshare.vercel.app?room={userSocket.room}
               </a>
             </div>
           </div>
