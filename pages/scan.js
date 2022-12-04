@@ -19,7 +19,8 @@ function Scan() {
               const room = url.searchParams.get("room");
               if (room) {
                 // open link in new tab
-                window.open(data.text, "_blank");
+                router.push(`/?room=${room}`, undefined, { shallow: true });
+                //window.open(data.text, "_blank");
               }
               return;
             }

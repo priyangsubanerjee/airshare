@@ -37,11 +37,12 @@ export default function Home({ secondary_room }) {
   const closeShareRoom = () => setShareRoomActive(false);
 
   useLayoutEffect(() => {
-    let roomId = null; // Inititalize default room id
+    let roomId = router.query.room || null; // Inititalize default room id
 
     (async () => {
-      if (secondary_room) {
-        roomId = secondary_room;
+      if (roomId) {
+        console.log("Room ID is not null", roomId);
+        socket = null;
       } else {
         try {
           const { data } = await axios.get("/api/ip");
@@ -55,7 +56,7 @@ export default function Home({ secondary_room }) {
 
       socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
     })();
-  }, []);
+  }, [router.query.room, router.query]);
 
   useEffect(() => {
     const unqiueUsers = usersInRoom.filter((user, index) => {
