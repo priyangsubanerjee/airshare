@@ -96,7 +96,7 @@ function ShareRoom({ visible, roomId, close }) {
                 <div className="flex items-center justify-center mt-5">
                   <QRCode
                     value={`https://airshare.vercel.app?room=${roomId}`}
-                    size={100}
+                    size={150}
                   />
                 </div>
                 <p className="text-xs text-stone-500 mt-8">
