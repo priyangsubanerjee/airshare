@@ -10,6 +10,7 @@ import io from "socket.io-client";
 import axios from "axios";
 import MyAvatar from "../components/MyAvatar";
 import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
+import Loading from "../components/Loading";
 
 let socket = null;
 
@@ -27,6 +28,7 @@ export default function Home({ secondary_room }) {
   const [userSocket, setUserSocket] = useState(null);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
     let roomId = null; // Inititalize default room id
@@ -84,6 +86,7 @@ export default function Home({ secondary_room }) {
       setUserSocket(socket_instance);
       console.log(socket_instance.getName());
       console.log(socket_instance.getImage());
+      setLoading(false);
     });
 
     socket.on("users-in-room", (data) => {
@@ -137,6 +140,7 @@ export default function Home({ secondary_room }) {
           </div>
         </div>
       )}
+      <Loading visible={loading} />
     </div>
   );
 }
