@@ -82,7 +82,7 @@ export default function Home({ secondary_room }) {
 
   return (
     <div className="h-screen w-screen bg-slate-100">
-      {userSocket && <div></div>}
+      {userSocket && <div>{userSocket.id}</div>}
     </div>
   );
 }
