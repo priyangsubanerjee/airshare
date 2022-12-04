@@ -11,6 +11,7 @@ import axios from "axios";
 import MyAvatar from "../components/MyAvatar";
 import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
 import Loading from "../components/Loading";
+import Head from "next/head";
 
 let socket = null;
 
@@ -98,6 +99,9 @@ export default function Home({ secondary_room }) {
   return (
     <div className="h-screen w-screen bg-white overflow-auto pb-40">
       <Navbar />
+      <Head>
+        <title>AirShare | File sharing made easy</title>
+      </Head>
       {userSocket && (
         <div>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
