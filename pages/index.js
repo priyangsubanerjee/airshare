@@ -1,12 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useLayoutEffect, useState } from "react";
-import axios from "axios";
-import io from "socket.io-client";
-import { useRouter } from "next/router";
-import QRCode from "react-qr-code";
 import SocketObject from "../Class/SocketObject";
 import Navbar from "../components/Navbar";
+import { useRouter } from "next/router";
+import QRCode from "react-qr-code";
+import io from "socket.io-client";
+import axios from "axios";
+import MyAvatar from "../components/MyAvatar";
+import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
 
 let socket = null;
 
@@ -79,6 +82,8 @@ export default function Home({ secondary_room }) {
       const socket_instance = new SocketObject(socket.id, room);
       socket.emit("join-room", socket_instance);
       setUserSocket(socket_instance);
+      console.log(socket_instance.getName());
+      console.log(socket_instance.getImage());
     });
 
     socket.on("users-in-room", (data) => {
@@ -88,19 +93,26 @@ export default function Home({ secondary_room }) {
   };
 
   return (
-    <div className="h-screen w-screen bg-slate-100 p-5">
+    <div className="h-screen w-screen bg-white">
       <Navbar />
       {userSocket && (
         <div>
-          {userSocket.room}
-          {uniqueUsersInRoom.map((user, index) => {
-            return (
-              <div key={index} className="mt-4">
-                <p>{user.id}</p>
-              </div>
-            );
-          })}
-          <QRCode value={`${remoteOrigin}/?room=${userSocket.room}`} />
+          <div className="flex justify-center mt-6 lg:mt-0">
+            <MyAvatar socket={userSocket} />
+          </div>
+          <div className="mt-8">
+            <div className="p-5 lg:p-20 flex items-center space-x-4">
+              <h2 className="text-sm font-medium shrink-0 text-neutral-700">
+                People in your room
+              </h2>
+              <div className="w-full h-[1px] bg-neutral-200"></div>
+            </div>
+            <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20">
+              {uniqueUsersInRoom.map((user, index) => {
+                return <OtherPeopleAvatar key={index} socket={user} />;
+              })}
+            </div>
+          </div>
         </div>
       )}
     </div>

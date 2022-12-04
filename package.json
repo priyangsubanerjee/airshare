@@ -19,7 +19,8 @@
     "react-qr-code": "^2.0.8",
     "socket.io-client": "^4.5.4",
     "string-encode": "^0.2.2",
-    "text-encoding": "^0.7.0"
+    "text-encoding": "^0.7.0",
+    "unique-names-generator": "^4.7.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
