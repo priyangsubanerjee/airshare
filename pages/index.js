@@ -90,6 +90,7 @@ export default function Home({ secondary_room }) {
   return (
     <div className="h-screen w-screen bg-slate-100 p-5">
       <Navbar />
+      {userSocket.room}
       {userSocket && (
         <div>
           {uniqueUsersInRoom.map((user, index) => {
