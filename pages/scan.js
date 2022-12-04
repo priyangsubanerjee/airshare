@@ -9,6 +9,9 @@ function Scan() {
         <QrReader
           delay={300}
           style={{ width: "100%" }}
+          containerStyle={{ width: "100%" }}
+          videoContainerStyle={{ width: "100%" }}
+          videoStyle={{ width: "100%" }}
           constraints={{
             facingMode: "environment",
           }}
