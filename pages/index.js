@@ -87,7 +87,6 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("connect", async () => {
-      toast.success("Connected to server");
       const socket_instance = new SocketObject(socket.id, room);
       socket.emit("join-room", socket_instance);
       setUserSocket(socket_instance);
