@@ -11,7 +11,7 @@ function Scan() {
     <div>
       <div className="h-96 overflow-hidden bg-red-50 -pt-10">
         {pageLoaded && (
-          <QrCodeReader height={500} width={500} facingMode={"front"} />
+          <QrCodeReader height={500} width={500} facingMode={"rear"} />
         )}
       </div>
     </div>
