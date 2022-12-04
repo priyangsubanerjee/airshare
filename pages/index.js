@@ -33,8 +33,9 @@ export default function Home({ secondary_room }) {
         roomId = secondary_room;
       } else {
         try {
-          const { data } = await axios.get("https://ip4.seeip.org/json");
+          const { data } = await axios.get("/api/ip");
           roomId = data.ip;
+          console.log("Room ID: ", roomId);
         } catch (error) {
           console.log(error);
           alert("Error getting IP address");
@@ -89,7 +90,17 @@ export default function Home({ secondary_room }) {
   return (
     <div className="h-screen w-screen bg-slate-100 p-5">
       <Navbar />
-      {userSocket && <div></div>}
+      {userSocket && (
+        <div>
+          {uniqueUsersInRoom.map((user, index) => {
+            return (
+              <div key={index} className="mt-4">
+                <p>{user.id}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
