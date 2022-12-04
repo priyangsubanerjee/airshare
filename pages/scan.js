@@ -9,8 +9,8 @@ function scan() {
 
   return (
     <div>
-      <div className="mt-10 flex items-center justify-center">
-        <QrCodeReader height={500} width={500} />
+      <div className="mt-10">
+        <QrReader />
       </div>
     </div>
   );
