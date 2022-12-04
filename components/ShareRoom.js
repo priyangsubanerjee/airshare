@@ -2,6 +2,7 @@ import Link from "next/link";
 import React from "react";
 import QRCode from "react-qr-code";
 import { Fade } from "react-reveal";
+import toast, { Toaster } from "react-hot-toast";
 
 function ShareRoom({ visible, roomId, close }) {
   return (
@@ -30,7 +31,19 @@ function ShareRoom({ visible, roomId, close }) {
                 <p className="text-xs text-stone-500 mt-2">
                   Copy provided address and send it to the other person...
                 </p>
-                <div className="flex items-center bg-stone-100 p-3 rounded mt-6">
+                <div
+                  onClick={() => {
+                    try {
+                      navigator.clipboard.writeText(
+                        `https://airshare.vercel.app?room=${roomId}`
+                      );
+                      toast.success("Link copied successfully!");
+                    } catch (e) {
+                      console.log(e);
+                    }
+                  }}
+                  className="flex items-center bg-stone-100 p-3 rounded mt-6"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"

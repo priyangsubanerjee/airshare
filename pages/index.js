@@ -12,6 +12,7 @@ import MyAvatar from "../components/MyAvatar";
 import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
 import Loading from "../components/Loading";
 import Head from "next/head";
+import toast, { Toaster } from "react-hot-toast";
 import ShareRoom from "../components/ShareRoom";
 
 let socket = null;
@@ -86,6 +87,7 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("connect", async () => {
+      toast.success("Connected to server");
       const socket_instance = new SocketObject(socket.id, room);
       socket.emit("join-room", socket_instance);
       setUserSocket(socket_instance);
@@ -95,7 +97,6 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("users-in-room", (data) => {
-      // todo: toast notifitcation
       setUsersInRoom(data.users);
     });
   };
