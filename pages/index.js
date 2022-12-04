@@ -6,6 +6,7 @@ import io from "socket.io-client";
 import { useRouter } from "next/router";
 import QRCode from "react-qr-code";
 import SocketObject from "../Class/SocketObject";
+import Navbar from "../components/Navbar";
 
 let socket = null;
 
@@ -87,17 +88,8 @@ export default function Home({ secondary_room }) {
 
   return (
     <div className="h-screen w-screen bg-slate-100 p-5">
-      {userSocket && <div>{userSocket.id}</div>}
-      <QRCode value={`${remoteOrigin}/?room=${userSocket?.room}`} size="100" />
-      <div className="mt-5">
-        {uniqueUsersInRoom.map((user, index) => {
-          return (
-            <div key={index}>
-              <div>{user.id}</div>
-            </div>
-          );
-        })}
-      </div>
+      <Navbar />
+      {userSocket && <div></div>}
     </div>
   );
 }
