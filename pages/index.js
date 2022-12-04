@@ -144,7 +144,7 @@ export default function Home({ secondary_room }) {
           </div>
         </div>
       )}
-      <Loading visible={true} />
+      <Loading visible={loading} />
     </div>
   );
 }
