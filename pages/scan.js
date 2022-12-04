@@ -18,7 +18,8 @@ function Scan() {
               const url = new URL(data);
               const room = url.searchParams.get("room");
               if (room) {
-                window.location.href = `/?room=${room}`;
+                // open link in new tab
+                window.open(data, "_blank");
               }
               return;
             }
