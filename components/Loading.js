@@ -17,8 +17,11 @@ function Loading({ visible }) {
                 </div>
               </div>
             </div>
-            <div className="mt-6 flex items-center justify-center space-x-4">
-              <p className="text-xs animate-pulse">Joining a room</p>
+            <div className="mt-6 flex items-center justify-center space-x-3">
+              <div className="border border-neutral-600 rounded-full h-4 w-4 border-t-transparent animate-spin"></div>
+              <p>
+                <span className="text-xs text-neutral-500">Joining room</span>
+              </p>
             </div>
           </div>
         )}
