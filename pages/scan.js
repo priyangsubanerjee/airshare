@@ -6,20 +6,26 @@ function Scan() {
 
   return (
     <div>
-      <div className="w-full h-[500px]">
-        <QrReader
-          onResult={(result, error) => {
-            if (!!result) {
-              setData(result?.text);
-            }
+      <QrReader
+        onResult={(result, error) => {
+          if (!!result) {
+            setData(result?.text);
+          }
 
-            if (!!error) {
-              console.info(error);
-            }
-          }}
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
+          if (!!error) {
+            console.info(error);
+          }
+        }}
+        style={{}}
+        containerStyle={{
+          width: "100%",
+          height: "250px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      />
+
       <p>{data}</p>
     </div>
   );
