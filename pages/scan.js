@@ -7,9 +7,8 @@ function Scan() {
   return (
     <div>
       <QrReader
+        className="w-full h-full"
         constraints={{
-          width: 640,
-          height: 480,
           facingMode: "environment",
         }}
         onResult={(result, error) => {
@@ -20,20 +19,6 @@ function Scan() {
           if (!!error) {
             console.info(error);
           }
-        }}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-        containerStyle={{
-          width: "100%",
-          height: "250px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          postion: "fixed",
-          top: "50%",
-          left: "50%",
         }}
       />
 
