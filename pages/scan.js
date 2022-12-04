@@ -19,7 +19,7 @@ function Scan() {
               const room = url.searchParams.get("room");
               if (room) {
                 // open link in new tab
-                window.open(data, "_blank");
+                window.open(data.text, "_blank");
               }
               return;
             }
