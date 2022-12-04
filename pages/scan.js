@@ -7,6 +7,11 @@ function Scan() {
   return (
     <div>
       <QrReader
+        constraints={{
+          width: 640,
+          height: 480,
+          facingMode: "environment",
+        }}
         onResult={(result, error) => {
           if (!!result) {
             setData(result?.text);
