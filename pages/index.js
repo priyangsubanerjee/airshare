@@ -34,7 +34,7 @@ export default function Home({ secondary_room }) {
       } else {
         try {
           const { data } = await axios.get("/api/ip");
-          roomId = data.ip;
+          roomId = window.btoa(data.ip);
           console.log("Room ID: ", roomId);
         } catch (error) {
           console.log(error);
