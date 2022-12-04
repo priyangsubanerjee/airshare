@@ -5,43 +5,41 @@ import axios from "axios";
 import io from "socket.io-client";
 import { useRouter } from "next/router";
 import QRCode from "react-qr-code";
+import SocketObject from "../Class/SocketObject";
 
 let socket = null;
 
 export async function getServerSideProps(ctx) {
-  const room = ctx.query.room || null;
+  const secondary_room = ctx.query.room || null;
   return {
     props: {
-      room,
+      secondary_room,
     },
   };
 }
 
-export default function Home({ room }) {
-  class SocketObject {
-    constructor(id, room) {
-      this.id = id;
-      this.room = room;
-    }
-
-    getId() {
-      return this.id;
-    }
-    getRoom() {
-      return this.room;
-    }
-  }
-
+export default function Home({ secondary_room }) {
   const router = useRouter();
   const [userSocket, setUserSocket] = useState(null);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
 
   useLayoutEffect(() => {
+    let roomId = null; // Inititalize default room id
+
     (async () => {
-      const { data } = await axios.get("https://ip4.seeip.org/json");
-      const roomId = room === null ? window.btoa(data.ip) : room;
-      socket == null && socketInitializer(roomId);
+      if (secondary_room) {
+        roomId = secondary_room;
+      } else {
+        try {
+          const { data } = await axios.get("https://ip4.seeip.org/json");
+          roomId = data.ip;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
     })();
   }, []);
 
@@ -58,7 +56,6 @@ export default function Home({ room }) {
       : "http://localhost:5589";
 
   const socketInitializer = async (room) => {
-    console.log("pp", room);
     socket = io(remote, {
       withCredentials: true,
       transports: [
@@ -71,64 +68,20 @@ export default function Home({ room }) {
     });
 
     socket.on("connect", async () => {
-      // Get users ip
-      try {
-        const c_socket = new SocketObject(socket.id, room);
-        socket.emit("join-room", c_socket);
-        setUserSocket(c_socket);
-      } catch (error) {}
+      const socket_instance = new SocketObject(socket.id, room);
+      socket.emit("join-room", socket_instance);
+      setUserSocket(socket_instance);
     });
 
     socket.on("users-in-room", (data) => {
-      console.log(data.message, data.users);
+      // todo: toast notifitcation
       setUsersInRoom(data.users);
-    });
-
-    socket.on("disconnect", () => {
-      console.log("disconnected");
     });
   };
 
   return (
-    <div>
-      {userSocket && (
-        <div>
-          <div className="p-5">
-            <div>You are connected to the server</div>
-            <div>Socket ID: {userSocket.getId()}</div>
-            <div>Socket Room: {userSocket.getRoom()}</div>
-            <div>
-              Share url:{" "}
-              <a
-                target={"_blank"}
-                href={`https://airshare.vercel.app?room=${userSocket.room}`}
-              >
-                https://airshare.vercel.app?room={userSocket.room}
-              </a>
-            </div>
-          </div>
-          <div>
-            <div className="p-5">
-              <QRCode
-                size={100}
-                value={`https://airshare.vercel.app?room=${userSocket.room}`}
-              />
-            </div>
-          </div>
-          <div className="p-5 bg-slate-50">
-            Other users in room {uniqueUsersInRoom.length}
-            <div>
-              {uniqueUsersInRoom.map((user, i) => {
-                return (
-                  <div key={i}>
-                    <p>{user.id}</p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
+    <div className="h-screen w-screen bg-slate-100">
+      {userSocket && <div></div>}
     </div>
   );
 }
