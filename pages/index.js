@@ -103,11 +103,11 @@ export default function Home({ secondary_room }) {
           <div className="mt-8">
             <div className="p-5 lg:p-20 flex items-center space-x-4">
               <h2 className="text-sm font-medium shrink-0 text-neutral-700">
-                People in your room
+                People near you
               </h2>
               <div className="w-full h-[1px] bg-neutral-200"></div>
             </div>
-            <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20">
+            <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20 mt-2">
               {uniqueUsersInRoom.map((user, index) => {
                 return <OtherPeopleAvatar key={index} socket={user} />;
               })}
