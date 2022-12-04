@@ -6,21 +6,34 @@ function Scan() {
 
   return (
     <div>
-      <QrReader
-        className="w-full h-full"
-        constraints={{
-          facingMode: "environment",
-        }}
-        onResult={(result, error) => {
-          if (!!result) {
-            setData(result?.text);
-          }
+      <div className="h-44 relative">
+        <QrReader
+          constraints={{
+            facingMode: "environment",
+          }}
+          onResult={(result, error) => {
+            if (!!result) {
+              setData(result?.text);
+            }
 
-          if (!!error) {
-            console.info(error);
-          }
-        }}
-      />
+            if (!!error) {
+              console.info(error);
+            }
+          }}
+          containerStyle={{
+            width: "100%",
+            padding: "0",
+          }}
+          videoContainerStyle={{
+            width: "100%",
+            height: "100%",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            zIndex: 1,
+          }}
+        />
+      </div>
 
       <p>{data}</p>
     </div>
