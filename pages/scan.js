@@ -30,7 +30,7 @@ function Scan() {
           }}
         />
       </div>
-      <div className="p-5 -mt-10">
+      <div className="p-5">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor ex fuga
         tenetur quidem, mollitia voluptates labore inventore voluptatem alias
         dolores quis quam eos unde quasi repellat sint optio! Sit,{" "}
