@@ -108,9 +108,12 @@ export default function Home({ room }) {
             </div>
           </div>
           <div>
-            <QRCode
-              value={`https://airshare.vercel.app?room=${userSocket.room}`}
-            />
+            <div className="p-5">
+              <QRCode
+                size={100}
+                value={`https://airshare.vercel.app?room=${userSocket.room}`}
+              />
+            </div>
           </div>
           <div className="p-5 bg-slate-50">
             Other users in room {uniqueUsersInRoom.length}
