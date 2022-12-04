@@ -51,13 +51,18 @@ export default function Home({ secondary_room }) {
     setUniqueUsersInRoom(unqiueUsers);
   }, [usersInRoom]);
 
-  const remote =
+  const remoteServer =
     process.env.NODE_ENV === "production"
       ? "https://airserver.up.railway.app"
       : "http://localhost:5589";
 
+  const remoteOrigin =
+    process.env.NODE_ENV === "production"
+      ? "https://airshare.vercel.app"
+      : "http://localhost:3000";
+
   const socketInitializer = async (room) => {
-    socket = io(remote, {
+    socket = io(remoteServer, {
       withCredentials: true,
       transports: [
         "websocket",
@@ -83,6 +88,7 @@ export default function Home({ secondary_room }) {
   return (
     <div className="h-screen w-screen bg-slate-100">
       {userSocket && <div>{userSocket.id}</div>}
+      <QRCode value={`${remoteOrigin}/?room=${userSocket?.room}`} size="100" />
     </div>
   );
 }
