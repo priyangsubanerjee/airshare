@@ -2322,6 +2322,15 @@
   optionalDependencies:
     "@zxing/text-encoding" "~0.9.0"
 
+"@zxing/library@^0.19.1":
+  "integrity" "sha512-rKwvl3Uuqs8yf364iU9l3HDDaIx8yPv+CH6DbtQaQr67VdKLG22G1ukEp9fOdDefE6tpLtRAdMnTrgtpiaKAZw=="
+  "resolved" "https://registry.npmjs.org/@zxing/library/-/library-0.19.1.tgz"
+  "version" "0.19.1"
+  dependencies:
+    "ts-custom-error" "^3.0.0"
+  optionalDependencies:
+    "@zxing/text-encoding" "~0.9.0"
+
 "@zxing/text-encoding@^0.9.0", "@zxing/text-encoding@~0.9.0":
   "integrity" "sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA=="
   "resolved" "https://registry.npmjs.org/@zxing/text-encoding/-/text-encoding-0.9.0.tgz"
@@ -7600,7 +7609,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@^16.8.0 || ^17.0.0", "react-dom@^18.1.0", "react-dom@^18.2.0", "react-dom@>=16", "react-dom@>=16.2.0", "react-dom@18.2.0":
+"react-dom@^16.8.0 || ^17.0.0", "react-dom@^17.0.0 || ^18.0.0", "react-dom@^18.1.0", "react-dom@^18.2.0", "react-dom@>=16", "react-dom@>=16.2.0", "react-dom@18.2.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -7651,6 +7660,14 @@
     "@zxing/browser" "0.0.7"
     "@zxing/library" "^0.18.3"
     "rollup" "^2.67.2"
+
+"react-qr-scanner@^1.0.0-alpha.11":
+  "integrity" "sha512-TdaygL+4U9iapskJgK5Ilb1Cw4wwzQ3bVpIfzzbrEsxPaEJzmjQ7VuMz8E9hBQGCU4Ee+YtgglE3byEtgtRpkA=="
+  "resolved" "https://registry.npmjs.org/react-qr-scanner/-/react-qr-scanner-1.0.0-alpha.11.tgz"
+  "version" "1.0.0-alpha.11"
+  dependencies:
+    "@zxing/library" "^0.19.1"
+    "prop-types" "^15.8.1"
 
 "react-qrcode-reader@^1.0.1":
   "integrity" "sha512-nKo480SH+TkwvOYFsB/CEvOQ3dmpwbfiyeu9A9wUqz+jqwjcUJklsrFLDebsBwV/eeM7oVnzFUHPDxJ9rasHeA=="
@@ -7739,7 +7756,7 @@
   "resolved" "https://registry.npmjs.org/react-webcam/-/react-webcam-7.0.1.tgz"
   "version" "7.0.1"
 
-"react@^15.3.0 || ^16.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.x || ^17.x || ^18.x", "react@^18.1.0", "react@^18.2.0", "react@>= 16", "react@>= 16.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.2.0", "react@18.2.0":
+"react@^15.3.0 || ^16.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.x || ^17.x || ^18.x", "react@^17.0.0 || ^18.0.0", "react@^18.1.0", "react@^18.2.0", "react@>= 16", "react@>= 16.0.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.2.0", "react@18.2.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"
@@ -9026,6 +9043,11 @@
   "integrity" "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg=="
   "resolved" "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
+
+"vue-weblineindia-qr-scanner@^1.0.0":
+  "integrity" "sha512-1VwJFCFktCFgHN157G+t47erCjrGoFE8/XNa3RAXQo9wOsp1ZhVgxqQchnjfIsyihdqzWTzY+Fz0qiUMhCua8A=="
+  "resolved" "https://registry.npmjs.org/vue-weblineindia-qr-scanner/-/vue-weblineindia-qr-scanner-1.0.0.tgz"
+  "version" "1.0.0"
 
 "w3c-hr-time@^1.0.2":
   "integrity" "sha512-z8P5DvDNjKDoFIHK7q8r8lackT6l+jo/Ye3HOle7l9nICP9lf1Ci25fy9vHd0JOWewkIFzXIEig3TdKT7JQ5fQ=="

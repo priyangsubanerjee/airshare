@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import QrReader from "react-qr-scanner";
 import QrCodeReader, { QRCode } from "react-qrcode-reader";
-import { QrReader } from "react-qr-reader";
 
-function scan() {
-  const handleRead = (code) => {
-    console.log(code.data);
-  };
-
+function Scan() {
+  const [pageLoaded, setPageLoaded] = useState(false);
+  useLayoutEffect(() => {
+    setPageLoaded(true);
+  }, []);
   return (
     <div>
-      <div className="">
-        <QrReader />
+      <div className="h-96 overflow-hidden bg-red-50 -pt-10">
+        {pageLoaded && (
+          <QrCodeReader height={500} width={500} facingMode={"front"} />
+        )}
       </div>
     </div>
   );
 }
 
-export default scan;
+export default Scan;
