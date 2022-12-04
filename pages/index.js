@@ -89,6 +89,15 @@ export default function Home({ secondary_room }) {
     <div className="h-screen w-screen bg-slate-100 p-5">
       {userSocket && <div>{userSocket.id}</div>}
       <QRCode value={`${remoteOrigin}/?room=${userSocket?.room}`} size="100" />
+      <div className="mt-5">
+        {uniqueUsersInRoom.map((user, index) => {
+          return (
+            <div key={index}>
+              <div>{user.id}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
