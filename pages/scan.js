@@ -16,13 +16,19 @@ function Scan() {
             console.info(error);
           }
         }}
-        style={{}}
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
         containerStyle={{
           width: "100%",
           height: "250px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          postion: "fixed",
+          top: "50%",
+          left: "50%",
         }}
       />
 
