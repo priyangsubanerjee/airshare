@@ -18,7 +18,7 @@ function Scan() {
               const url = new URL(data);
               const room = url.searchParams.get("room");
               if (room) {
-                router.push(`/?room=${room}`);
+                window.location.href = `/?room=${room}`;
               }
               return;
             }
