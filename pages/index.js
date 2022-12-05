@@ -14,17 +14,18 @@ import Loading from "../components/Loading";
 import Head from "next/head";
 import toast, { Toaster } from "react-hot-toast";
 import ShareRoom from "../components/ShareRoom";
+import Scan from "../components/Scan";
 
 let socket = null;
 
-// export async function getServerSideProps(ctx) {
-//   const secondary_room = ctx.query.room || null;
-//   return {
-//     props: {
-//       secondary_room,
-//     },
-//   };
-// }
+export async function getServerSideProps(ctx) {
+  const secondary_room = ctx.query.room || null;
+  return {
+    props: {
+      secondary_room,
+    },
+  };
+}
 
 export default function Home({ secondary_room }) {
   const router = useRouter();
@@ -33,27 +34,31 @@ export default function Home({ secondary_room }) {
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shareRoomActive, setShareRoomActive] = useState(false);
+  const [scanActive, setScanActive] = useState(false);
 
   const closeShareRoom = () => setShareRoomActive(false);
 
   useLayoutEffect(() => {
-    let roomId = router.query.room || null; // Inititalize default room id
-    socket = null;
+    let roomId = secondary_room || null; // Inititalize default room id
+
     (async () => {
       if (roomId) {
-        socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
+        console.log("Room ID is not null", roomId);
+        socket = null;
       } else {
         try {
           const { data } = await axios.get("/api/ip");
           roomId = window.btoa(data.ip);
-          socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
+          console.log("Room ID: ", roomId);
         } catch (error) {
           console.log(error);
           alert("Error getting IP address");
         }
       }
+
+      socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
     })();
-  }, [router.query.room, router.query]);
+  }, []);
 
   useEffect(() => {
     const unqiueUsers = usersInRoom.filter((user, index) => {
@@ -109,7 +114,7 @@ export default function Home({ secondary_room }) {
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
             <button
-              onClick={() => setShareRoomActive(true)}
+              onClick={() => setScanActive(true)}
               className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2"
             >
               <svg
@@ -155,6 +160,7 @@ export default function Home({ secondary_room }) {
         roomId={userSocket && userSocket.room}
         close={() => closeShareRoom()}
       />
+      <Scan visible={scanActive} close={() => setScanActive(false)} />
     </div>
   );
 }
