@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import SocketObject from "../Class/SocketObject";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
@@ -29,12 +29,12 @@ export async function getServerSideProps(ctx) {
 
 export default function Home({ secondary_room }) {
   const router = useRouter();
+
   const [userSocket, setUserSocket] = useState(null);
   const [usersInRoom, setUsersInRoom] = useState([]);
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shareRoomActive, setShareRoomActive] = useState(false);
-
   const closeShareRoom = () => setShareRoomActive(false);
 
   useLayoutEffect(() => {
@@ -100,6 +100,10 @@ export default function Home({ secondary_room }) {
     socket.on("users-in-room", (data) => {
       setUsersInRoom(data.users);
     });
+
+    socket.on("notify-alert", (data) => {
+      toast.success(`${data.from} says hi!`);
+    });
   };
 
   return (
@@ -112,6 +116,7 @@ export default function Home({ secondary_room }) {
         <div>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
+
             <button
               onClick={() => setShareRoomActive(true)}
               className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2"
@@ -147,7 +152,14 @@ export default function Home({ secondary_room }) {
             </div>
             <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20 mt-2 lg:mt-6">
               {uniqueUsersInRoom.map((user, index) => {
-                return <OtherPeopleAvatar key={index} socket={user} />;
+                return (
+                  <OtherPeopleAvatar
+                    mySocket={userSocket}
+                    socket={socket}
+                    key={index}
+                    user={user}
+                  />
+                );
               })}
             </div>
           </div>
