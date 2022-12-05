@@ -11,6 +11,9 @@ function Scan({ visible, close, socket }) {
       {visible && (
         <div className="fixed inset-0 h-screen w-screen bg-white">
           <QrReader
+            constraints={{
+              facingMode: "environment",
+            }}
             onResult={(result, error) => {
               if (!!result) {
                 socket = null;
