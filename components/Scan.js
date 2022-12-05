@@ -10,26 +10,28 @@ function Scan({ visible, close, socket }) {
     <div>
       {visible && (
         <div className="fixed inset-0 h-screen w-screen bg-white">
-          <QrReader
-            constraints={{
-              facingMode: "environment",
-            }}
-            onResult={(result, error) => {
-              if (!!result) {
-                socket = null;
-                setData(result?.text);
-                const url = new URL(result?.text);
-                const roomId = url.searchParams.get("room");
-                window.location.href = `/?room=${roomId}`;
-                close();
-              }
+          <div className="mt-5">
+            <QrReader
+              constraints={{
+                facingMode: "environment",
+              }}
+              onResult={(result, error) => {
+                if (!!result) {
+                  socket = null;
+                  setData(result?.text);
+                  const url = new URL(result?.text);
+                  const roomId = url.searchParams.get("room");
+                  window.location.href = `/?room=${roomId}`;
+                  close();
+                }
 
-              if (!!error) {
-                console.info(error);
-              }
-            }}
-            style={{ width: "100%" }}
-          />
+                if (!!error) {
+                  console.info(error);
+                }
+              }}
+              style={{ width: "100%" }}
+            />
+          </div>
           <div className="px-5 mt-5">
             <h1 className="text-lg font-semibold">Scanning in progress...</h1>
             <p className="text-sm text-stone-600 mt-2">
