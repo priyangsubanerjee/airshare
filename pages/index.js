@@ -17,14 +17,14 @@ import ShareRoom from "../components/ShareRoom";
 
 let socket = null;
 
-export async function getServerSideProps(ctx) {
-  const secondary_room = ctx.query.room || null;
-  return {
-    props: {
-      secondary_room,
-    },
-  };
-}
+// export async function getServerSideProps(ctx) {
+//   const secondary_room = ctx.query.room || null;
+//   return {
+//     props: {
+//       secondary_room,
+//     },
+//   };
+// }
 
 export default function Home({ secondary_room }) {
   const router = useRouter();
@@ -38,23 +38,20 @@ export default function Home({ secondary_room }) {
 
   useLayoutEffect(() => {
     let roomId = router.query.room || null; // Inititalize default room id
-
+    socket = null;
     (async () => {
       if (roomId) {
-        console.log("Room ID is not null", roomId);
-        socket = null;
+        socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
       } else {
         try {
           const { data } = await axios.get("/api/ip");
           roomId = window.btoa(data.ip);
-          console.log("Room ID: ", roomId);
+          socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
         } catch (error) {
           console.log(error);
           alert("Error getting IP address");
         }
       }
-
-      socket == null && socketInitializer(roomId); // Initialize socket connection with roomId
     })();
   }, [router.query.room, router.query]);
 
