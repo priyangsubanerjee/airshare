@@ -12,8 +12,8 @@ function ShareMenu({ visible, close, from, to, socket }) {
       </Fade>
       <Fade bottom when={visible}>
         {visible && (
-          <div className="fixed inset-0 h-full w-full flex items-end z-20">
-            <div className="h-auto w-full bg-white">
+          <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
+            <div className="h-auto w-full lg:w-[500px] bg-white lg:rounded-md">
               <div>
                 <div className="flex items-center justify-end px-5 py-3">
                   <button
@@ -46,7 +46,7 @@ function ShareMenu({ visible, close, from, to, socket }) {
                     />
                   </svg>
                 </span>
-                <div
+                <button
                   onClick={() => {
                     socket.emit("notify", {
                       to,
@@ -67,7 +67,7 @@ function ShareMenu({ visible, close, from, to, socket }) {
                       {to.name}
                     </p>
                   </div>
-                </div>
+                </button>
               </div>
               <div className="mt-5">
                 <div className="px-5 space-y-2">
