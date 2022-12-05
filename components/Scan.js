@@ -30,7 +30,18 @@ function Scan({ visible, close, socket }) {
             }}
             style={{ width: "100%" }}
           />
-          <p>{data}</p>
+          <div className="px-5">
+            <h1 className="text-lg font-semibold">Scanning in progress...</h1>
+            <p className="text-sm text-stone-600 mt-2">
+              Place the QR code in the center of the screen to scan.
+            </p>
+            <button
+              className="mt-7 bg-slate-900 text-white p-2 w-full rounded-full"
+              onClick={() => close()}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       )}
     </div>

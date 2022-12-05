@@ -34,7 +34,6 @@ export default function Home({ secondary_room }) {
   const [uniqueUsersInRoom, setUniqueUsersInRoom] = useState([]);
   const [loading, setLoading] = useState(true);
   const [shareRoomActive, setShareRoomActive] = useState(false);
-  const [scanActive, setScanActive] = useState(false);
 
   const closeShareRoom = () => setShareRoomActive(false);
 
@@ -111,7 +110,6 @@ export default function Home({ secondary_room }) {
       </Head>
       {userSocket && (
         <div>
-          <button onClick={() => setScanActive(true)}>Scan</button>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
             <button
@@ -161,7 +159,6 @@ export default function Home({ secondary_room }) {
         roomId={userSocket && userSocket.room}
         close={() => closeShareRoom()}
       />
-      <Scan visible={scanActive} close={() => setScanActive(false)} />
     </div>
   );
 }
