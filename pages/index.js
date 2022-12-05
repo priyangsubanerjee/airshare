@@ -111,10 +111,11 @@ export default function Home({ secondary_room }) {
       </Head>
       {userSocket && (
         <div>
+          <button onClick={() => setScanActive(true)}>Scan</button>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
             <MyAvatar socket={userSocket} />
             <button
-              onClick={() => setScanActive(true)}
+              onClick={() => setShareRoomActive(true)}
               className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2"
             >
               <svg
