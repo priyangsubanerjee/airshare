@@ -17,6 +17,7 @@ function ShareMenu({ visible, close, from, to, socket }) {
               <div>
                 <div className="flex items-center justify-end px-5 py-3">
                   <button
+                    hidden
                     onClick={() => close()}
                     className="text-sm text-neutral-700"
                   >
@@ -75,14 +76,14 @@ function ShareMenu({ visible, close, from, to, socket }) {
                   </label>
                   <div className="bg-stone-100 py-2 px-4 rounded-md">
                     <input
-                      className="bg-transparent"
+                      className="bg-transparent outline-none w-full"
                       type="text"
                       placeholder="Type a message here"
                     />
                   </div>
                 </div>
               </div>
-              <div className="flex items-center p-5 mt-3 border-b">
+              <div className="flex items-center p-5 mt-3">
                 <button className="flex items-center text-xs bg-sky-50 rounded-full px-4 py-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +102,7 @@ function ShareMenu({ visible, close, from, to, socket }) {
                   <span className="ml-2">Choose attachments</span>
                 </button>
               </div>
-              <div className="flex justify-end items-center p-5">
+              <div className="flex justify-end items-center p-5 mt-7 border-t">
                 <button onClick={() => close()} className="text-sm mr-7">
                   Cancel
                 </button>

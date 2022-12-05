@@ -8,13 +8,6 @@ function OtherPeopleAvatar({ mySocket, user, socket }) {
   return (
     <div className="flex flex-col items-center justify-center ">
       <div
-        // onClick={() => {
-        //   socket.emit("notify", {
-        //     to: user.id,
-        //     from: mySocket.name,
-        //   });
-        // }}
-
         onClick={() => setShareMenuActive(true)}
         className="h-20 w-20 bg-gradient-to-br from-yellow-50 to-red-50 rounded-full flex items-center justify-center overflow-hidden"
       >
