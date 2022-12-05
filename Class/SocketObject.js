@@ -1,12 +1,7 @@
-import {
-  uniqueNamesGenerator,
-  adjectives,
-  colors,
-  animals,
-} from "unique-names-generator";
+import { uniqueNamesGenerator, colors, animals } from "unique-names-generator";
 
 const customConfig = {
-  dictionaries: [adjectives, colors, animals],
+  dictionaries: [colors, animals],
   separator: " ",
   length: 2,
   style: "capital",
