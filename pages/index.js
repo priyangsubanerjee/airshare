@@ -92,8 +92,6 @@ export default function Home({ secondary_room }) {
       const socket_instance = new SocketObject(socket.id, room);
       socket.emit("join-room", socket_instance);
       setUserSocket(socket_instance);
-      console.log(socket_instance.getName());
-      console.log(socket_instance.getImage());
       setLoading(false);
     });
 
@@ -102,7 +100,7 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("notify-alert", (data) => {
-      toast.success(`${data.from} says hi!`);
+      toast(`${data.from} says hi!`);
     });
   };
 
