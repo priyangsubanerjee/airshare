@@ -3,8 +3,10 @@
 // eslint-disable-next-line react-hooks/exhaustive-deps
 
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import RoundedAvatar from "./RoundedAvatar";
+import RoundedAvatar from "./RoundedAvatarSmall";
 import { Fade } from "react-reveal";
+import RoundedAvatarBig from "./RoundedAvatarBig";
+import toast from "react-hot-toast";
 
 function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
@@ -71,7 +73,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
       <Fade bottom when={visible}>
         {visible && (
           <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
-            <div className="h-auto w-full lg:w-[550px] bg-white lg:rounded-md relative">
+            <div className="min-h-[400px] flex flex-col lg:h-auto w-full lg:w-[550px] bg-white lg:rounded-md relative">
               <div>
                 <div className="flex items-center justify-end px-5 py-3">
                   <button
@@ -104,7 +106,10 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     />
                   </svg>
                 </span>
-                <div className="flex items-center -space-x-3">
+                <button
+                  onClick={() => setSelectUsersActive(true)}
+                  className="flex items-center -space-x-3"
+                >
                   {toArray.map((user, index) => {
                     return (
                       <div key={index}>
@@ -113,10 +118,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     );
                   })}
 
-                  <button
-                    onClick={() => setSelectUsersActive(true)}
-                    className="h-10 border w-10 bg-neutral-100 flex items-center justify-center rounded-full overflow-hidden"
-                  >
+                  <button className="h-10 border w-10 bg-neutral-100 text-neutral-600 flex items-center justify-center rounded-full overflow-hidden">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -132,7 +134,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       />
                     </svg>
                   </button>
-                </div>
+                </button>
               </div>
               <Fade duration={500} when={selectUsersActive}>
                 {selectUsersActive && (
@@ -163,7 +165,10 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                               onClick={() => addOrRemoveUser(user)}
                               className={`flex flex-col py-3 rounded-md border border-transparent items-center relative`}
                             >
-                              <RoundedAvatar user={user} displayName={true} />
+                              <RoundedAvatarBig
+                                user={user}
+                                displayName={true}
+                              />
                               {checkIfUserIsSelected(user) && (
                                 <div className="absolute top-2 right-7 lg:right-8">
                                   <svg
@@ -202,7 +207,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center p-5 mt-2">
+              <div className="flex items-center p-5 mt-0">
                 <button className="flex items-center text-xs bg-sky-50 rounded-full px-4 py-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -221,8 +226,36 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   <span className="ml-2">Choose attachments</span>
                 </button>
               </div>
-              <div className="flex justify-end items-center p-5 mt-7 border-t">
-                <button onClick={() => close()} className="text-sm mr-7">
+              <div className="flex items-center p-5 border-t mt-auto">
+                <button
+                  onClick={() => {
+                    toast.success("Test connection message sent !");
+                    socket.emit("test-connection", {
+                      to: toArray,
+                      from: from,
+                    });
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-5 h-5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                    />
+                  </svg>
+                </button>
+
+                <button
+                  onClick={() => close()}
+                  className="text-sm mr-7 ml-auto"
+                >
                   Cancel
                 </button>
                 <button className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3">

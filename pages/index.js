@@ -100,8 +100,8 @@ export default function Home({ secondary_room }) {
       console.log(data.users);
     });
 
-    socket.on("notify-alert", (data) => {
-      toast(`${data.from.name} says hi!`);
+    socket.on("test-connection-alert", (data) => {
+      toast(`${data.from.name} says Hi!`);
     });
   };
 
