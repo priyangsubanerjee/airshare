@@ -1,12 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import toast from "react-hot-toast";
 import { Fade } from "react-reveal";
 import RoundedAvatar from "./RoundedAvatar";
 
 function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
   const [selectUsersActive, setSelectUsersActive] = useState(false);
+
+  if (!visible) {
+    setToArray([to]);
+  }
 
   function addOrRemoveUser(user) {
     let tempArray = [...toArray];
