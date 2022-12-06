@@ -123,7 +123,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     );
                   })}
 
-                  <button className="h-10 border border-neutral-500 w-10 bg-neutral-100 text-neutral-600 flex items-center justify-center rounded-full overflow-hidden">
+                  <button className="h-12 border border-neutral-900 w-12 bg-neutral-800 text-neutral-100 flex items-center justify-center rounded-full overflow-hidden">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -272,6 +272,10 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   Cancel
                 </button>
                 <button
+                  disabled={
+                    messageObj.text.length === 0 &&
+                    messageObj.files.length === 0
+                  }
                   onClick={() => {
                     socket.emit("send-message-obj", {
                       message: messageObj,
@@ -283,7 +287,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       files: [],
                     });
                   }}
-                  className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3"
+                  className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3 disabled:opacity-50"
                 >
                   <span>Send</span>
                   <svg
