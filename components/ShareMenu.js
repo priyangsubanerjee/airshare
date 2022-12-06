@@ -1,44 +1,65 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
+// eslint-disable-next-line react-hooks/exhaustive-deps
+
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import { Fade } from "react-reveal";
 import RoundedAvatar from "./RoundedAvatar";
+import { Fade } from "react-reveal";
 
 function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
   const [selectUsersActive, setSelectUsersActive] = useState(false);
+  const [uniqueUsers, setUniqueUsers] = useState([]);
 
   function addOrRemoveUser(user) {
-    let tempArray = [...toArray];
-    if (tempArray.includes(user)) {
-      tempArray = tempArray.filter((u) => u.id !== user.id);
+    if (toArray.find((u) => u.id === user.id)) {
+      setToArray(toArray.filter((u) => u.id !== user.id));
     } else {
-      tempArray.push(user);
+      setToArray([...toArray, user]);
     }
-    setToArray(tempArray);
   }
 
   function checkIfUserIsSelected(user) {
-    return toArray.includes(user);
+    return toArray.find((u) => u.id === user.id);
   }
 
   useEffect(() => {
-    toArray.forEach((user) => {
-      if (user.id !== to.id) {
-        if (uniqueUsersInRoom.includes(user)) {
-        } else {
-          setToArray(toArray.filter((u) => u.id !== user.id));
-        }
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (visible) {
+      setUniqueUsers(uniqueUsersInRoom.filter((user) => user.id !== to.id));
+    } else {
+      setToArray([to]);
+    }
+  }, [visible]);
+
+  useEffect(() => {
+    if (selectUsersActive) {
+      setUniqueUsers(
+        uniqueUsersInRoom.filter(
+          (user) => user.id !== to.id && user.id !== from.id
+        )
+      );
+    } else {
+      setUniqueUsers(
+        uniqueUsersInRoom.filter(
+          (user) => user.id !== to.id && user.id !== from.id
+        )
+      );
+    }
   }, [uniqueUsersInRoom]);
 
   useEffect(() => {
-    if (!visible) {
-      setToArray([to]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
+    const usersToRemove = toArray.filter((user) => {
+      return !uniqueUsersInRoom.find((u) => u.id === user.id);
+    });
+
+    setToArray(
+      toArray.filter((user) => !usersToRemove.find((u) => u.id === user.id))
+    );
+  }, [uniqueUsers]);
+
+  useEffect(() => {
+    toArray.length == 0 && close();
+  }, [toArray]);
 
   return (
     <div>
@@ -91,6 +112,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       </div>
                     );
                   })}
+
                   <button
                     onClick={() => setSelectUsersActive(true)}
                     className="h-10 border w-10 bg-neutral-100 flex items-center justify-center rounded-full overflow-hidden"
@@ -112,7 +134,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   </button>
                 </div>
               </div>
-              <Fade when={selectUsersActive}>
+              <Fade duration={500} when={selectUsersActive}>
                 {selectUsersActive && (
                   <div className="absolute inset-0 h-full w-full shadow-lg bg-white p-5 rounded-lg">
                     <div className="flex items-center justify-between">
@@ -126,28 +148,43 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                         Done
                       </button>
                     </div>
-
-                    <div className="grid grid-cols-4 gap-4">
-                      {uniqueUsersInRoom.map((user, index) => {
-                        if (user.id !== to.id) {
+                    {uniqueUsers.length == 0 ? (
+                      <div className="flex items-center justify-center mt-10">
+                        <p className="text-sm text-stone-500">
+                          No users to select !
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-4 mt-5">
+                        {uniqueUsers.map((user, index) => {
                           return (
-                            <button
+                            <div
                               key={index}
                               onClick={() => addOrRemoveUser(user)}
-                              className={`flex flex-col border border-transparent hover:bg-neutral-50 py-5 rounded-md items-center space-x-3 mt-5 ${
-                                checkIfUserIsSelected(user) &&
-                                "bg-indigo-50/50 border-indigo-400"
-                              }`}
+                              className={`flex flex-col py-3 rounded-md border border-transparent items-center relative`}
                             >
-                              <RoundedAvatar user={user} />
-                              <span className="text-[10px] text-stone-600 mt-2">
-                                {user.name}
-                              </span>
-                            </button>
+                              <RoundedAvatar user={user} displayName={true} />
+                              {checkIfUserIsSelected(user) && (
+                                <div className="absolute top-2 right-8">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    class="w-6 h-6 text-teal-500"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                      clip-rule="evenodd"
+                                    />
+                                  </svg>
+                                </div>
+                              )}
+                            </div>
                           );
-                        }
-                      })}
-                    </div>
+                        })}
+                      </div>
+                    )}
                   </div>
                 )}
               </Fade>
@@ -156,7 +193,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   <label htmlFor="" className="text-xs text-stone-500">
                     Enter a message
                   </label>
-                  <div className="bg-stone-100 py-2 px-4 rounded-md">
+                  <div className="bg-stone-100 py-2 px-4 rounded">
                     <input
                       className="bg-transparent outline-none w-full"
                       type="text"
@@ -165,7 +202,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center p-5 mt-3">
+              <div className="flex items-center p-5 mt-2">
                 <button className="flex items-center text-xs bg-sky-50 rounded-full px-4 py-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
