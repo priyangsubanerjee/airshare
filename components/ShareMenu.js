@@ -279,6 +279,11 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       to: toArray,
                       from: from,
                     });
+                    setMessageObj({
+                      text: "",
+                      files: [],
+                    });
+                    close();
                   }}
                   className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3"
                 >
