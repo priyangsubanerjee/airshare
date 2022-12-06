@@ -7,10 +7,6 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
   const [selectUsersActive, setSelectUsersActive] = useState(false);
 
-  if (!visible) {
-    setToArray([to]);
-  }
-
   function addOrRemoveUser(user) {
     let tempArray = [...toArray];
     if (tempArray.includes(user)) {
@@ -36,6 +32,13 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uniqueUsersInRoom]);
+
+  useEffect(() => {
+    if (!visible) {
+      setToArray([to]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible]);
 
   return (
     <div>
