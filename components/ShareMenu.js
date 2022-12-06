@@ -7,6 +7,7 @@ import RoundedAvatar from "./RoundedAvatarSmall";
 import { Fade } from "react-reveal";
 import RoundedAvatarBig from "./RoundedAvatarBig";
 import toast from "react-hot-toast";
+import { TextField } from "@mui/material";
 
 function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
@@ -199,21 +200,19 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
               </Fade>
               <div className="mt-5">
                 <div className="px-5 space-y-2">
-                  <label htmlFor="" className="text-xs text-stone-500">
-                    Enter a message
-                  </label>
-                  <div className="bg-stone-100 py-2 px-4 rounded">
-                    <input
-                      className="bg-transparent outline-none w-full"
-                      type="text"
+                  <div className="">
+                    <TextField
+                      id="outlined-basic"
+                      label="Type a message"
+                      variant="outlined"
+                      fullWidth
                       value={messageObj.text}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setMessageObj({
                           ...messageObj,
                           text: e.target.value,
-                        })
-                      }
-                      placeholder="Type a message here"
+                        });
+                      }}
                     />
                   </div>
                 </div>
