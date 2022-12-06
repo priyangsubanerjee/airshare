@@ -155,7 +155,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                         </p>
                       </div>
                     ) : (
-                      <div className="grid grid-cols-4 mt-5">
+                      <div className="grid grid-cols-3 lg:grid-cols-4 mt-5">
                         {uniqueUsers.map((user, index) => {
                           return (
                             <div
@@ -165,7 +165,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                             >
                               <RoundedAvatar user={user} displayName={true} />
                               {checkIfUserIsSelected(user) && (
-                                <div className="absolute top-2 right-8">
+                                <div className="absolute top-2 right-7 lg:right-8">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
