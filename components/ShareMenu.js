@@ -229,6 +229,9 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
               <div className="flex items-center p-5 border-t mt-auto">
                 <button
                   onClick={() => {
+                    if (window.navigator.vibrate) {
+                      window.navigator.vibrate(100);
+                    }
                     toast.success("Test connection message sent !");
                     socket.emit("test-connection", {
                       to: toArray,
