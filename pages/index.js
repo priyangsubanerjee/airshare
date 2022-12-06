@@ -103,6 +103,10 @@ export default function Home({ secondary_room }) {
     socket.on("test-connection-alert", (data) => {
       toast(`${data.from.name} says Hi!`);
     });
+
+    socket.on("receive-message-obj", (data) => {
+      toast(data.message.text + " from " + data.from.name.split(" ")[0]);
+    });
   };
 
   return (

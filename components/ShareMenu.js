@@ -12,6 +12,10 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   const [toArray, setToArray] = useState([to]);
   const [selectUsersActive, setSelectUsersActive] = useState(false);
   const [uniqueUsers, setUniqueUsers] = useState([]);
+  const [messageObj, setMessageObj] = useState({
+    text: "",
+    files: [],
+  });
 
   function addOrRemoveUser(user) {
     if (toArray.find((u) => u.id === user.id)) {
@@ -202,6 +206,13 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     <input
                       className="bg-transparent outline-none w-full"
                       type="text"
+                      value={messageObj.text}
+                      onChange={(e) =>
+                        setMessageObj({
+                          ...messageObj,
+                          text: e.target.value,
+                        })
+                      }
                       placeholder="Type a message here"
                     />
                   </div>
@@ -261,7 +272,16 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                 >
                   Cancel
                 </button>
-                <button className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3">
+                <button
+                  onClick={() => {
+                    socket.emit("send-message-obj", {
+                      message: messageObj,
+                      to: toArray,
+                      from: from,
+                    });
+                  }}
+                  className="text-sm bg-slate-900 text-white w-28 py-2 rounded-full flex items-center justify-center space-x-3"
+                >
                   <span>Send</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
