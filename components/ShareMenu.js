@@ -125,7 +125,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     })}
 
                     <Tooltip arrow title="Add more people">
-                      <button className="h-12 border border-neutral-900 w-12 bg-neutral-800 text-neutral-100 flex items-center justify-center rounded-full overflow-hidden">
+                      <button className="h-10 border border-neutral-700 w-10 bg-neutral-700 text-neutral-100 flex items-center justify-center rounded-full overflow-hidden">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -242,33 +242,35 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   </Tooltip>
                 </div>
                 <div className="flex items-center p-5 border-t mt-auto">
-                  <button
-                    onClick={() => {
-                      if (window.navigator.vibrate) {
-                        window.navigator.vibrate(100);
-                      }
-                      toast.success("Test connection message sent !");
-                      socket.emit("test-connection", {
-                        to: toArray,
-                        from: from,
-                      });
-                    }}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="currentColor"
-                      class="w-5 h-5"
+                  <Tooltip arrow title="Test connection">
+                    <button
+                      onClick={() => {
+                        if (window.navigator.vibrate) {
+                          window.navigator.vibrate(100);
+                        }
+                        toast.success("Test connection message sent !");
+                        socket.emit("test-connection", {
+                          to: toArray,
+                          from: from,
+                        });
+                      }}
                     >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                      />
-                    </svg>
-                  </button>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+                        />
+                      </svg>
+                    </button>
+                  </Tooltip>
 
                   <button
                     onClick={() => close()}

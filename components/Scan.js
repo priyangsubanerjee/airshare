@@ -46,7 +46,7 @@ function Scan({ visible, close, socket }) {
               </button>
             </div>
           </div>
-          <div className="md:block hidden">
+          <div className="md:block hidden p-20">
             <h1 className="text-lg font-semibold">
               Scannner is only available on mobile devices.
             </h1>

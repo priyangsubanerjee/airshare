@@ -101,7 +101,7 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("test-connection-alert", (data) => {
-      toast(`${data.from.name} says Hi!`);
+      toast.success(`Test connection message received.`);
     });
 
     socket.on("receive-message-obj", (data) => {
