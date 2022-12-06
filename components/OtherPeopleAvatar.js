@@ -6,7 +6,7 @@ function OtherPeopleAvatar({ mySocket, user, socket, uniqueUsersInRoom }) {
   const [shareMenuActive, setShareMenuActive] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center ">
+    <button className="flex flex-col items-center justify-center ">
       <div
         onClick={() => setShareMenuActive(true)}
         className="h-20 w-20 bg-gradient-to-br from-yellow-50 to-red-50 rounded-full flex items-center justify-center overflow-hidden"
@@ -29,7 +29,7 @@ function OtherPeopleAvatar({ mySocket, user, socket, uniqueUsersInRoom }) {
         socket={socket}
         uniqueUsersInRoom={uniqueUsersInRoom}
       />
-    </div>
+    </button>
   );
 }
 
