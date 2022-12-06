@@ -123,7 +123,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     );
                   })}
 
-                  <button className="h-10 border w-10 bg-neutral-100 text-neutral-600 flex items-center justify-center rounded-full overflow-hidden">
+                  <button className="h-10 border border-neutral-500 w-10 bg-neutral-100 text-neutral-600 flex items-center justify-center rounded-full overflow-hidden">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -218,7 +218,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                 </div>
               </div>
               <div className="flex items-center p-5 mt-0">
-                <button className="flex items-center text-xs bg-sky-50 rounded-full px-4 py-2">
+                <button className="flex items-center text-xs bg-sky-50 text-sky-900 rounded-full px-4 py-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
