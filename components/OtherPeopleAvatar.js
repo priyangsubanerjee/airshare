@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ShareMenu from "./ShareMenu";
 
-function OtherPeopleAvatar({ mySocket, user, socket }) {
+function OtherPeopleAvatar({ mySocket, user, socket, uniqueUsersInRoom }) {
   const [shareMenuActive, setShareMenuActive] = useState(false);
 
   return (
@@ -27,6 +27,7 @@ function OtherPeopleAvatar({ mySocket, user, socket }) {
         to={user}
         from={mySocket}
         socket={socket}
+        uniqueUsersInRoom={uniqueUsersInRoom}
       />
     </div>
   );

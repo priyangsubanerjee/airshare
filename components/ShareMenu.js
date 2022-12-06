@@ -1,8 +1,39 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import toast from "react-hot-toast";
 import { Fade } from "react-reveal";
+import RoundedAvatar from "./RoundedAvatar";
 
-function ShareMenu({ visible, close, from, to, socket }) {
+function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
+  const [toArray, setToArray] = useState([to]);
+  const [selectUsersActive, setSelectUsersActive] = useState(false);
+
+  function addOrRemoveUser(user) {
+    let tempArray = [...toArray];
+    if (tempArray.includes(user)) {
+      tempArray = tempArray.filter((u) => u.id !== user.id);
+    } else {
+      tempArray.push(user);
+    }
+    setToArray(tempArray);
+  }
+
+  function checkIfUserIsSelected(user) {
+    return toArray.includes(user);
+  }
+
+  useEffect(() => {
+    toArray.forEach((user) => {
+      if (user.id !== to.id) {
+        if (uniqueUsersInRoom.includes(user)) {
+        } else {
+          setToArray(toArray.filter((u) => u.id !== user.id));
+        }
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uniqueUsersInRoom]);
+
   return (
     <div>
       <Fade when={visible}>
@@ -13,7 +44,7 @@ function ShareMenu({ visible, close, from, to, socket }) {
       <Fade bottom when={visible}>
         {visible && (
           <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
-            <div className="h-auto w-full lg:w-[500px] bg-white lg:rounded-md">
+            <div className="h-auto w-full lg:w-[550px] bg-white lg:rounded-md relative">
               <div>
                 <div className="flex items-center justify-end px-5 py-3">
                   <button
@@ -46,29 +77,74 @@ function ShareMenu({ visible, close, from, to, socket }) {
                     />
                   </svg>
                 </span>
-                <button
-                  onClick={() => {
-                    socket.emit("notify", {
-                      to,
-                      from,
-                    });
-                  }}
-                  className="flex items-center"
-                >
-                  <div className="h-10 w-10 bg-gradient-to-br from-yellow-50 to-red-50 rounded-full flex items-center justify-center overflow-hidden">
-                    <img
-                      src={to.image}
-                      alt=""
-                      className="h-7 w-7 rounded-full pointer-events-none"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-[11px] ml-2 bg-white text-neutral-700 text-left">
-                      {to.name}
-                    </p>
-                  </div>
-                </button>
+                <div className="flex items-center -space-x-3">
+                  {toArray.map((user, index) => {
+                    return (
+                      <div key={index}>
+                        <RoundedAvatar user={user} />
+                      </div>
+                    );
+                  })}
+                  <button
+                    onClick={() => setSelectUsersActive(true)}
+                    className="h-10 border w-10 bg-neutral-100 flex items-center justify-center rounded-full overflow-hidden"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="w-4 h-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 4.5v15m7.5-7.5h-15"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
+              <Fade when={selectUsersActive}>
+                {selectUsersActive && (
+                  <div className="absolute inset-0 h-full w-full shadow-lg bg-white p-5 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <h1 className="font-semibold text-neutral-800">
+                        Select <span className="font-light">more users</span>
+                      </h1>
+                      <button
+                        onClick={() => setSelectUsersActive(false)}
+                        className="text-sm text-blue-500"
+                      >
+                        Done
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-4 gap-4">
+                      {uniqueUsersInRoom.map((user, index) => {
+                        if (user.id !== to.id) {
+                          return (
+                            <button
+                              key={index}
+                              onClick={() => addOrRemoveUser(user)}
+                              className={`flex flex-col border border-transparent hover:bg-neutral-50 py-5 rounded-md items-center space-x-3 mt-5 ${
+                                checkIfUserIsSelected(user) &&
+                                "bg-indigo-50/50 border-indigo-400"
+                              }`}
+                            >
+                              <RoundedAvatar user={user} />
+                              <span className="text-[10px] text-stone-600 mt-2">
+                                {user.name}
+                              </span>
+                            </button>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
+                )}
+              </Fade>
               <div className="mt-5">
                 <div className="px-5 space-y-2">
                   <label htmlFor="" className="text-xs text-stone-500">

@@ -97,6 +97,7 @@ export default function Home({ secondary_room }) {
 
     socket.on("users-in-room", (data) => {
       setUsersInRoom(data.users);
+      console.log(data.users);
     });
 
     socket.on("notify-alert", (data) => {
@@ -156,6 +157,7 @@ export default function Home({ secondary_room }) {
                     socket={socket}
                     key={index}
                     user={user}
+                    uniqueUsersInRoom={uniqueUsersInRoom}
                   />
                 );
               })}
