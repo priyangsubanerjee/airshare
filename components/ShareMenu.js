@@ -69,7 +69,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
 
   return (
     <div>
-      <Fade when={visible}>
+      <Fade duration={500} when={visible}>
         {visible && (
           <div className="fixed inset-0 h-full w-full bg-black/50 z-10"></div>
         )}
@@ -77,7 +77,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
       <Fade bottom when={visible}>
         {visible && (
           <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
-            <div className="min-h-[400px] flex flex-col lg:h-auto w-full lg:w-[550px] bg-white lg:rounded-md relative">
+            <div className="min-h-[400px] flex flex-col lg:h-auto w-full lg:w-[550px] bg-white relative">
               <div>
                 <div className="flex items-center justify-end px-5 py-3">
                   <button
@@ -155,7 +155,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       </button>
                     </div>
                     {uniqueUsers.length == 0 ? (
-                      <div className="flex items-center justify-center mt-10">
+                      <div className="flex items-center justify-center mt-20">
                         <p className="text-sm text-stone-500">
                           No users to select !
                         </p>
