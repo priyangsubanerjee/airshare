@@ -143,7 +143,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
               </div>
               <Fade duration={500} when={selectUsersActive}>
                 {selectUsersActive && (
-                  <div className="absolute inset-0 h-full w-full shadow-lg bg-white p-5 rounded-lg">
+                  <div className="absolute inset-0 h-full w-full shadow-lg bg-white p-5 rounded-lg z-10">
                     <div className="flex items-center justify-between">
                       <h1 className="font-semibold text-neutral-800">
                         Select <span className="font-light">more users</span>
