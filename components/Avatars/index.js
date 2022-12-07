@@ -5,9 +5,9 @@ function Avatar({ user, displayName, size }) {
   return (
     <div className="flex flex-col items-center justify-center">
       <div
-        className={`${
-          size == "big" ? "h-20 w-20" : "h-12  w-12"
-        } border bg-gradient-to-br from-yellow-50 to-red-50 flex items-center justify-center rounded-full overflow-hidden`}
+        className={`border ${
+          size == "big" ? "h-20 w-20" : "h-12  w-12 border-stone-400"
+        } bg-gradient-to-br from-yellow-50 to-red-50 flex items-center justify-center rounded-full overflow-hidden`}
       >
         <img
           src={user.image}

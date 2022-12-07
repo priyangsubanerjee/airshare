@@ -196,7 +196,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                                       xmlns="http://www.w3.org/2000/svg"
                                       viewBox="0 0 24 24"
                                       fill="currentColor"
-                                      class="w-6 h-6 text-teal-500"
+                                      class="w-6 h-6 text-teal-500 bg-white rounded-full"
                                     >
                                       <path
                                         fill-rule="evenodd"
