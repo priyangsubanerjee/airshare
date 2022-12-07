@@ -37,7 +37,10 @@ function Navbar() {
           </svg>
         </button>
       </Link>
-      <button onClick={() => setScanActive(true)} className="-mt-2 ml-6">
+      <button
+        onClick={() => setScanActive(true)}
+        className="-mt-2 ml-6 md:hidden"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

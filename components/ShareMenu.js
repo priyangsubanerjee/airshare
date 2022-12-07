@@ -3,7 +3,7 @@
 // eslint-disable-next-line react-hooks/exhaustive-deps
 
 import React, { useState, useEffect, useLayoutEffect } from "react";
-import RoundedAvatar from "./RoundedAvatarSmall";
+import Avatar from "../components/Avatars/index";
 import { Fade } from "react-reveal";
 import RoundedAvatarBig from "./RoundedAvatarBig";
 import toast from "react-hot-toast";
@@ -79,7 +79,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
         {visible && (
           <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
             <ClickAwayListener onClickAway={() => close()}>
-              <div className="min-h-[400px] flex flex-col lg:h-auto w-full lg:w-[550px] bg-white relative">
+              <div className="min-h-[450px] flex flex-col lg:h-auto w-full lg:w-[550px] bg-white relative">
                 <div>
                   <div className="flex items-center justify-end px-5 py-3">
                     <button
@@ -119,7 +119,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     {toArray.map((user, index) => {
                       return (
                         <div key={index}>
-                          <RoundedAvatar user={user} />
+                          <Avatar size={"small"} user={user} />
                         </div>
                       );
                     })}
@@ -161,6 +161,18 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       {uniqueUsers.length == 0 ? (
                         <div className="flex items-center justify-center mt-20">
                           <p className="text-sm text-stone-500">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              class="w-5 h-5 mr-3 inline-block text-rose-500"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M1.371 8.143c5.858-5.857 15.356-5.857 21.213 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.06 0c-4.98-4.979-13.053-4.979-18.032 0a.75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182c4.1-4.1 10.749-4.1 14.85 0a.75.75 0 010 1.061l-.53.53a.75.75 0 01-1.062 0 8.25 8.25 0 00-11.667 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.204 3.182a6 6 0 018.486 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0 3.75 3.75 0 00-5.304 0 .75.75 0 01-1.06 0l-.53-.53a.75.75 0 010-1.06zm3.182 3.182a1.5 1.5 0 012.122 0 .75.75 0 010 1.061l-.53.53a.75.75 0 01-1.061 0l-.53-.53a.75.75 0 010-1.06z"
+                                clip-rule="evenodd"
+                              />
+                            </svg>
                             No users to select !
                           </p>
                         </div>
@@ -173,7 +185,8 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                                 onClick={() => addOrRemoveUser(user)}
                                 className={`flex flex-col py-3 rounded-md border border-transparent items-center relative`}
                               >
-                                <RoundedAvatarBig
+                                <Avatar
+                                  size={"big"}
                                   user={user}
                                   displayName={true}
                                 />
@@ -201,12 +214,12 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     </div>
                   )}
                 </Fade>
-                <div className="mt-5">
+                <div className="mt-12">
                   <div className="px-5 space-y-2">
                     <div className="">
                       <TextField
                         id="outlined-basic"
-                        label="Type a message"
+                        label="Enter a message"
                         variant="outlined"
                         fullWidth
                         value={messageObj.text}
@@ -240,6 +253,24 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       <span className="ml-2">Choose attachments</span>
                     </button>
                   </Tooltip>
+                </div>
+                <div className="text-left px-5 mt-4">
+                  <p className="text-xs text-stone-500">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="w-4 h-4 inline-block mr-1"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    Your messages & attachments are{" "}
+                    <span className="text-teal-600">end-to-end encrypted.</span>
+                  </p>
                 </div>
                 <div className="flex items-center p-5 border-t mt-auto">
                   <Tooltip arrow title="Test connection">

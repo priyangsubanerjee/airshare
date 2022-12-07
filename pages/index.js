@@ -2,19 +2,17 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
-import SocketObject from "../Class/SocketObject";
+import RoomDetails from "../components/Modals/RoomDetails";
+import People from "../components/Avatars/People";
+import SocketObject from "../class/SocketObject";
+import Loading from "../components/Loading";
+import Me from "../components/Avatars/Me";
 import Navbar from "../components/Navbar";
 import { useRouter } from "next/router";
-import QRCode from "react-qr-code";
+import toast from "react-hot-toast";
 import io from "socket.io-client";
-import axios from "axios";
-import MyAvatar from "../components/MyAvatar";
-import OtherPeopleAvatar from "../components/OtherPeopleAvatar";
-import Loading from "../components/Loading";
 import Head from "next/head";
-import toast, { Toaster } from "react-hot-toast";
-import ShareRoom from "../components/ShareRoom";
-import Scan from "../components/Scan";
+import axios from "axios";
 
 let socket = null;
 
@@ -37,21 +35,20 @@ export default function Home({ secondary_room }) {
   const [shareRoomActive, setShareRoomActive] = useState(false);
   const closeShareRoom = () => setShareRoomActive(false);
 
+  // Initialize socket connection & get Room id
+
   useLayoutEffect(() => {
-    let roomId = secondary_room || null; // Inititalize default room id
+    let roomId = secondary_room || null;
 
     (async () => {
       if (roomId) {
-        console.log("Room ID is not null", roomId);
         socket = null;
       } else {
         try {
           const { data } = await axios.get("/api/ip");
           roomId = window.btoa(data.ip);
-          console.log("Room ID: ", roomId);
         } catch (error) {
           console.log(error);
-          alert("Error getting IP address");
         }
       }
 
@@ -59,22 +56,16 @@ export default function Home({ secondary_room }) {
     })();
   }, []);
 
+  // Get & set unique users in room
+
   useEffect(() => {
-    const unqiueUsers = usersInRoom.filter((user, index) => {
+    const unqiueUsers = usersInRoom.filter((user) => {
       return user.id !== userSocket.id;
     });
     setUniqueUsersInRoom(unqiueUsers);
   }, [usersInRoom]);
 
-  const remoteServer =
-    process.env.NODE_ENV === "production"
-      ? "https://airserver.up.railway.app"
-      : "http://localhost:5589";
-
-  const remoteOrigin =
-    process.env.NODE_ENV === "production"
-      ? "https://airshare.vercel.app"
-      : "http://localhost:3000";
+  // Socket connection initializer
 
   const socketInitializer = async (room) => {
     socket = io(remoteServer, {
@@ -109,6 +100,16 @@ export default function Home({ secondary_room }) {
     });
   };
 
+  const remoteServer =
+    process.env.NODE_ENV === "production"
+      ? "https://airserver.up.railway.app"
+      : "http://localhost:5589";
+
+  const remoteOrigin =
+    process.env.NODE_ENV === "production"
+      ? "https://airshare.vercel.app"
+      : "http://localhost:3000";
+
   return (
     <div className="h-screen w-screen bg-white overflow-auto pb-40">
       <Navbar />
@@ -118,8 +119,7 @@ export default function Home({ secondary_room }) {
       {userSocket && (
         <div>
           <div className="flex flex-col justify-center items-center mt-0 lg:mt-0">
-            <MyAvatar socket={userSocket} />
-
+            <Me socket={userSocket} />
             <button
               onClick={() => setShareRoomActive(true)}
               className="bg-slate-900 text-xs w-fit text-white rounded-full py-2 px-4 mt-3 flex items-center justify-center space-x-2"
@@ -155,13 +155,15 @@ export default function Home({ secondary_room }) {
             </div>
             <div className="grid grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-10 px-5 lg:px-20 mt-2 lg:mt-6">
               {uniqueUsersInRoom.map((user, index) => {
+                // user stands for the people object
+
                 return (
-                  <OtherPeopleAvatar
+                  <People
+                    uniqueUsersInRoom={uniqueUsersInRoom}
                     mySocket={userSocket}
                     socket={socket}
                     key={index}
                     user={user}
-                    uniqueUsersInRoom={uniqueUsersInRoom}
                   />
                 );
               })}
@@ -170,7 +172,7 @@ export default function Home({ secondary_room }) {
         </div>
       )}
       <Loading visible={loading} />
-      <ShareRoom
+      <RoomDetails
         visible={shareRoomActive}
         roomId={userSocket && userSocket.room}
         close={() => closeShareRoom()}
