@@ -14,7 +14,7 @@ class MyDocument extends Document {
           <meta name="application-name" content="AirShare" />
           <meta name="apple-mobile-web-app-title" content="AirShare" />
           <meta name="msapplication-starturl" content="/" />
-          <meta name="msapplication-TileColor" content="#fff" />
+
           <meta name="theme-color" content="#fff" />
         </Head>
         <body>
