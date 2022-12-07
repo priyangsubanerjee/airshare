@@ -4,7 +4,7 @@
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import RoomDetails from "../components/Modals/RoomDetails";
 import People from "../components/Avatars/People";
-import SocketObject from "../class/SocketObject";
+import SocketObject from "../socketClass/SocketObject";
 import Loading from "../components/Loading";
 import Me from "../components/Avatars/Me";
 import Navbar from "../components/Navbar";
