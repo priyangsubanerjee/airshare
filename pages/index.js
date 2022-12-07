@@ -13,6 +13,8 @@ import toast from "react-hot-toast";
 import io from "socket.io-client";
 import Head from "next/head";
 import axios from "axios";
+import Receive from "../components/Modals/Receive";
+import { Fade } from "react-reveal";
 
 let socket = null;
 
@@ -34,6 +36,7 @@ export default function Home({ secondary_room }) {
   const [loading, setLoading] = useState(true);
   const [shareRoomActive, setShareRoomActive] = useState(false);
   const closeShareRoom = () => setShareRoomActive(false);
+  const [receivedObjects, setReceivedObjects] = useState([]);
 
   // Initialize socket connection & get Room id
 
@@ -88,7 +91,6 @@ export default function Home({ secondary_room }) {
 
     socket.on("users-in-room", (data) => {
       setUsersInRoom(data.users);
-      console.log(data.users);
     });
 
     socket.on("test-connection-alert", (data) => {
@@ -96,8 +98,16 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("receive-message-obj", (data) => {
-      toast(data.message.text + " from " + data.from.name.split(" ")[0]);
+      setReceivedObjects((prev) => [...prev, data]);
     });
+  };
+
+  useEffect(() => {
+    console.log(receivedObjects);
+  }, [receivedObjects]);
+
+  const handleRemoveObject = (obj) => {
+    setReceivedObjects((prev) => prev.filter((item) => item !== obj));
   };
 
   const remoteServer =
@@ -177,6 +187,21 @@ export default function Home({ secondary_room }) {
         roomId={userSocket && userSocket.room}
         close={() => closeShareRoom()}
       />
+
+      {receivedObjects.map((obj, index) => {
+        return (
+          <>
+            {index == 0 && (
+              <div className="fixed inset-0 h-full w-full bg-black/50 z-10"></div>
+            )}
+            <Receive
+              key={index}
+              obj={obj}
+              handleRemoveObject={handleRemoveObject}
+            />
+          </>
+        );
+      })}
     </div>
   );
 }
