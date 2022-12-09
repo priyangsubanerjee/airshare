@@ -4,7 +4,7 @@
 
 import { TextField, Tooltip } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
-import Avatar from "../../components/Avatars/index";
+import Avatar from "../Avatars/index";
 import { Fade } from "react-reveal";
 import toast from "react-hot-toast";
 import File from "../Avatars/File";
@@ -69,11 +69,22 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
     toArray.length == 0 && close();
   }, [toArray]);
 
-  const handleFileChange = (e) => {
+  useEffect(() => {
+    console.log(messageObj);
+  }, [messageObj]);
+
+  const handleFileChange = async (e) => {
     if (messageObj.files.length == 0) {
       const files = e.target.files;
       const filesArr = Array.from(files);
+
+      filesArr.forEach(async (file) => {
+        const fileUrl = "";
+        file.url = fileUrl;
+      });
+
       setMessageObj({ ...messageObj, files: filesArr });
+      fileInput.current.value = "";
     } else {
       // add new files to the existing files
       const files = e.target.files;
@@ -298,6 +309,8 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       <File
                         file={file}
                         key={index}
+                        messageObj={messageObj}
+                        setMessageObj={setMessageObj}
                         handleRemoveFile={handleRemoveFile}
                       />
                     );
@@ -364,6 +377,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                     messageObj.files.length === 0
                   }
                   onClick={() => {
+                    console.log(messageObj);
                     socket.emit("send-message-obj", {
                       message: messageObj,
                       to: toArray,

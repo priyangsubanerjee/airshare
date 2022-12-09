@@ -1,7 +1,17 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-function File({ file, handleRemoveFile, hideRemove }) {
+function File({
+  file,
+  handleRemoveFile,
+  hideRemove,
+  messageObj,
+  setMessageObj,
+}) {
+  const [uploaded, setUploaded] = useState(false);
+
   const checkFileNameLength = (name) => {
     if (name.length > 10) {
       return name.slice(0, 10) + "..." + name.slice(-3);
@@ -10,8 +20,48 @@ function File({ file, handleRemoveFile, hideRemove }) {
     }
   };
 
+  useEffect(() => {
+    if (uploaded) return;
+
+    (async () => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const { data, status } = await axios.post(
+          "https://pidb.up.railway.app/upload/",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods":
+                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+            },
+          }
+        );
+
+        if (status === 200) {
+          setUploaded(true);
+          messageObj.files.map((f) => {
+            if (file.name === f.name) {
+              f.key = data.key;
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [uploaded]);
+
   return (
-    <div className="flex items-center shrink-0 border rounded overflow-hidden text-left h-14 px-2">
+    <div className="flex items-center shrink-0 border rounded overflow-hidden text-left h-14 px-2 relative">
+      {uploaded === false && (
+        <div className="absolute h-full w-full inset-0 bg-white/90 z-10 flex items-center justify-center">
+          <p className="text-xs">Uploading</p>
+        </div>
+      )}
       <div>
         <img
           className="h-12 w-12 object-cover object-center"

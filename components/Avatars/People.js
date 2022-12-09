@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
-import ShareMenu from "../Modals/ShareMenu";
+import ShareMenu from "../Modals/Send";
 
 function OtherPeopleAvatar({ mySocket, user, socket, uniqueUsersInRoom }) {
   const [shareMenuActive, setShareMenuActive] = useState(false);
