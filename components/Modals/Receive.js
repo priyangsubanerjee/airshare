@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/jsx-no-target-blank */
 import { TextField, Tooltip } from "@mui/material";
 import React from "react";
 import { Fade, Reveal } from "react-reveal";
@@ -5,6 +7,13 @@ import Avatar from "../Avatars";
 import File from "../Avatars/File";
 
 function Receive({ handleRemoveObject, obj }) {
+  const downloadFile = async (urlin) => {
+    const res = await fetch(urlin);
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    return url;
+  };
+
   return (
     <Reveal>
       <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
@@ -63,15 +72,33 @@ function Receive({ handleRemoveObject, obj }) {
               </div>
             </div>
           </div>
+          <div className="p-5 mt-3">
+            <h2 className="font-medium text-xs text-stone-600 mb-3">
+              Received attachments
+            </h2>
+            {obj.files.map((file, index) => {
+              //download file from server
 
-          <div className="flex items-center overflow-auto scrollbar-hide space-x-4 px-5">
-            {obj.message.files.length > 0 &&
-              obj.message.files.map((file, index) => {
-                return <File file={file} key={index} hideRemove={true} />;
-              })}
+              return (
+                <div key={index}>
+                  <a
+                    target={"_blank"}
+                    href={file.url}
+                    className="flex items-center border w-fit h-14 pr-3 rounded-md"
+                  >
+                    <img
+                      className="h-10 w-16 object-contain"
+                      src={file.url}
+                      alt=""
+                    />
+                    <span className="text-xs text-stone-500">{file.name}</span>
+                  </a>
+                </div>
+              );
+            })}
           </div>
 
-          <div className="text-left px-5 mt-10">
+          <div className="text-left px-5 mt-7 mb-4">
             <p className="text-xs text-stone-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

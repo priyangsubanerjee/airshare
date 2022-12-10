@@ -11,6 +11,7 @@ class SocketObject {
   constructor(id, room) {
     this.id = id;
     this.room = room;
+    this.files = [];
     this.name = uniqueNamesGenerator(customConfig);
     this.image = `https://avatars.dicebear.com/api/avataaars/${this.name.replace(
       " ",

@@ -3,12 +3,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function File({
+function FilePreview({
   file,
+  from,
+  socket,
   handleRemoveFile,
   hideRemove,
   messageObj,
-  setMessageObj,
 }) {
   const [uploaded, setUploaded] = useState(false);
 
@@ -45,7 +46,9 @@ function File({
           setUploaded(true);
           messageObj.files.map((f) => {
             if (file.name === f.name) {
-              f.key = data.key;
+              file.type = "image/png"
+                ? (f.url = "https://pidb.up.railway.app/v1/" + data.key)
+                : (f.url = "/logo.png");
             }
           });
         }
@@ -53,7 +56,7 @@ function File({
         console.log(error);
       }
     })();
-  }, [uploaded]);
+  }, [file]);
 
   return (
     <div className="flex items-center shrink-0 border rounded overflow-hidden text-left h-14 px-2 relative">
@@ -95,4 +98,4 @@ function File({
   );
 }
 
-export default File;
+export default FilePreview;

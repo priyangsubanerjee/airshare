@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import RoomDetails from "../components/Modals/RoomDetails";
@@ -98,7 +96,12 @@ export default function Home({ secondary_room }) {
     });
 
     socket.on("receive-message-obj", (data) => {
+      console.log(data);
       setReceivedObjects((prev) => [...prev, data]);
+    });
+
+    socket.on("file-recv", (data) => {
+      console.log(data);
     });
   };
 

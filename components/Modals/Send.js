@@ -17,6 +17,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
     text: "",
     files: [],
   });
+  const [uploadedFiles, setUploadedFiles] = useState([]);
   const fileInput = useRef(null);
 
   function addOrRemoveUser(user) {
@@ -309,6 +310,9 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                       <File
                         file={file}
                         key={index}
+                        from={from}
+                        socket={socket}
+                        toArray={toArray}
                         messageObj={messageObj}
                         setMessageObj={setMessageObj}
                         handleRemoveFile={handleRemoveFile}
@@ -378,8 +382,16 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
                   }
                   onClick={() => {
                     console.log(messageObj);
+                    const nFIle = messageObj.files.map((file) => {
+                      return {
+                        name: file.name,
+                        type: file.type,
+                        url: file.url,
+                      };
+                    });
                     socket.emit("send-message-obj", {
                       message: messageObj,
+                      files: nFIle,
                       to: toArray,
                       from: from,
                     });
