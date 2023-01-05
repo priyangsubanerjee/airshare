@@ -14,6 +14,14 @@ function Receive({ handleRemoveObject, obj }) {
     return url;
   };
 
+  const checkFileNameLength = (name) => {
+    if (name.length > 10) {
+      return name.slice(0, 10) + "..." + name.slice(-3);
+    } else {
+      return name;
+    }
+  };
+
   return (
     <Reveal>
       <div className="fixed inset-0 h-full w-full flex lg:items-center lg:justify-center items-end z-20">
@@ -91,7 +99,9 @@ function Receive({ handleRemoveObject, obj }) {
                       src={file.url}
                       alt=""
                     />
-                    <span className="text-xs text-stone-500">{file.name}</span>
+                    <span className="text-xs text-stone-500 ml-2">
+                      {checkFileNameLength(file.name)}
+                    </span>
                   </a>
                 </div>
               );

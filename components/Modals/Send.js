@@ -2,8 +2,8 @@
 /* eslint-disable @next/next/no-img-element */
 // eslint-disable-next-line react-hooks/exhaustive-deps
 
-import { TextField, Tooltip } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
+import { TextField, Tooltip } from "@mui/material";
 import Avatar from "../Avatars/index";
 import { Fade } from "react-reveal";
 import toast from "react-hot-toast";
@@ -17,7 +17,7 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
     text: "",
     files: [],
   });
-  const [uploadedFiles, setUploadedFiles] = useState([]);
+
   const fileInput = useRef(null);
 
   function addOrRemoveUser(user) {
@@ -69,10 +69,6 @@ function ShareMenu({ visible, close, from, to, socket, uniqueUsersInRoom }) {
   useEffect(() => {
     toArray.length == 0 && close();
   }, [toArray]);
-
-  useEffect(() => {
-    console.log(messageObj);
-  }, [messageObj]);
 
   const handleFileChange = async (e) => {
     if (messageObj.files.length == 0) {

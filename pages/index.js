@@ -115,7 +115,7 @@ export default function Home({ secondary_room }) {
 
   const remoteServer =
     process.env.NODE_ENV === "production"
-      ? "https://airserver.up.railway.app"
+      ? "https://airshare-server.onrender.com/"
       : "http://localhost:5589";
 
   const remoteOrigin =
