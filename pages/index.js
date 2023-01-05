@@ -113,6 +113,8 @@ export default function Home({ secondary_room }) {
     setReceivedObjects((prev) => prev.filter((item) => item !== obj));
   };
 
+  //ttps://airserver.up.railway.app
+
   const remoteServer =
     process.env.NODE_ENV === "production"
       ? "https://airshare-server.onrender.com/"
