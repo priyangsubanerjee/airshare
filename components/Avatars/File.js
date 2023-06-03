@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { uploadFileArray } from "../../helper/asset";
 
 function FilePreview({
   file,
@@ -30,29 +31,17 @@ function FilePreview({
       formData.append("file", file);
 
       try {
-        const { data, status } = await axios.post(
-          "https://pidb.up.railway.app/upload/",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              "Access-Control-Allow-Origin": "*",
-              "Access-Control-Allow-Methods":
-                "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-            },
-          }
-        );
-
-        if (status === 200) {
+        const response = await uploadFileArray([file], null, "product");
+        if (response) {
           setUploaded(true);
           socket.emit("fileUploaded", {
             from,
-            key: data.key,
+            key: response[0],
           });
           messageObj.files.map((f) => {
             if (file.name === f.name) {
               file.type = "image/png"
-                ? (f.url = "https://pidb.up.railway.app/v1/" + data.key)
+                ? (f.url = response[0])
                 : (f.url = "/logo.png");
             }
           });
