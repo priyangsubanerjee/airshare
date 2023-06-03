@@ -117,8 +117,8 @@ export default function Home({ secondary_room }) {
 
   const remoteServer =
     process.env.NODE_ENV === "production"
-      ? "https://airshare-server.onrender.com/"
-      : "http://localhost:5589";
+      ? "https://fearless-helpful-cotton.glitch.me/"
+      : "https://fearless-helpful-cotton.glitch.me/";
 
   const remoteOrigin =
     process.env.NODE_ENV === "production"
