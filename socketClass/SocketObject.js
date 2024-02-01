@@ -12,10 +12,10 @@ class SocketObject {
     this.id = id;
     this.room = room;
     this.name = uniqueNamesGenerator(customConfig);
-    this.image = `https://avatars.dicebear.com/api/avataaars/${this.name.replace(
+    this.image = `https://api.dicebear.com/7.x/avataaars/svg?seed=${this.name.replace(
       " ",
       ""
-    )}.svg?mood[]=happy`;
+    )}`;
   }
 
   getId() {
